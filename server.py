@@ -2,7 +2,6 @@ from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 import json
 import urllib.request
 import urllib.error
-import re
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
 MODEL = "mistral"   # "phi" (fast), "mistral" (balanced), "llama3" (best quality)
@@ -38,15 +37,15 @@ class Handler(BaseHTTPRequestHandler):
 
         messages = body.get("messages", [])
 
-        # build prompt (controlled + concise)
+        # Build prompt from last 6 messages for context
         prompt_parts = []
         for m in messages[-6:]:
             role = "User" if m.get("role") == "user" else "Assistant"
             prompt_parts.append(f"{role}: {m.get('content', '')}")
 
         prompt_parts.append(
-            "Assistant: Answer in 2 concise sentences. "
-            "Do not cut off mid-sentence. Be clear and precise."
+            "Assistant: Give a clear, detailed answer in 4-6 sentences. "
+            "Explain the key points thoroughly. Do not cut off mid-sentence."
         )
 
         prompt = "\n".join(prompt_parts)
@@ -59,11 +58,11 @@ class Handler(BaseHTTPRequestHandler):
                     "prompt": prompt,
                     "stream": True,
                     "options": {
-                        "num_predict": 160,
+                        "num_predict": 600,       # Raised to allow detailed multi-sentence answers
                         "temperature": 0.7,
                         "top_p": 0.9,
                         "repeat_penalty": 1.2,
-                        "stop": ["\nUser:", "\nAssistant:"]
+                        "stop": ["\nUser:", "\nAssistant:", "```"]  # Added ``` to catch markdown artifacts
                     }
                 }).encode(),
                 headers={"Content-Type": "application/json"}
@@ -71,54 +70,44 @@ class Handler(BaseHTTPRequestHandler):
 
             res = urllib.request.urlopen(req, timeout=60)
 
-            # streaming response
             self.send_response(200)
-            self.send_header("Content-Type", "text/plain")
+            self.send_header("Content-Type", "text/plain; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-cache")
             self.end_headers()
-
-            buffer = ""
 
             for line in res:
                 if not line:
                     continue
 
                 try:
-                    chunk = json.loads(line.decode())
+                    chunk = json.loads(line.decode("utf-8"))
                     token = chunk.get("response", "")
 
                     if token:
-                        buffer += token
+                        # Write tokens directly — Ollama streams complete tokens,
+                        # no need to buffer by word boundaries
+                        self.wfile.write(token.encode("utf-8"))
+                        self.wfile.flush()
 
-                        # send only full words (avoid broken tokens)
-                        if " " in buffer:
-                            parts = buffer.rsplit(" ", 1)
-                            safe_text = parts[0] + " "
-                            buffer = parts[1]
-
-                            self.wfile.write(safe_text.encode())
-                            self.wfile.flush()
+                    # Break cleanly when Ollama signals it's done
+                    if chunk.get("done"):
+                        break
 
                 except Exception:
                     continue
-
-            # flush remaining buffer
-            if buffer:
-                self.wfile.write(buffer.encode())
-                self.wfile.flush()
 
         except urllib.error.URLError:
             print("Ollama not running")
             self.send_response(500)
             self.end_headers()
-            self.wfile.write(b"Ollama not running. Run: ollama run phi")
+            self.wfile.write(b"Ollama not running. Run: ollama run mistral")
 
         except Exception as e:
             print("Server error:", e)
             self.send_response(500)
             self.end_headers()
-            self.wfile.write(b"Server error")
+            self.wfile.write(f"Server error: {e}".encode())
 
     def do_OPTIONS(self):
         self.send_response(200)
@@ -132,5 +121,5 @@ class Handler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    print("Server running at http://localhost:8000")
+    print(f"Server running at http://localhost:8000  (model: {MODEL})")
     ThreadingHTTPServer(("", 8000), Handler).serve_forever()
