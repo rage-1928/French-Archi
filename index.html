@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Architecture Française</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jost:wght@300;400;500;600&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:    #FAFAF7;
+    --bg2:   #F3EDE0;
+    --bg3:   #E2D9C8;
+    --navy:  #1B2A40;
+    --terra: #B55A35;
+    --gold:  #9A7A28;
+    --stone: #7A6E60;
+    --text:  #2A2620;
+    --light: #C4B49A;
+    --white: #FFFFFF;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Jost', sans-serif; font-weight: 300;
+    overflow-x: hidden;
+  }
+  img { display:block; width:100%; }
+
+  /* NAV */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:200;
+    background: rgba(250,250,247,0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--bg3);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3.5rem;
+  }
+  .nav-logo {
+    font-family: 'Cinzel', serif; font-size: 0.78rem;
+    letter-spacing: 0.3em; color: var(--navy); text-transform: uppercase;
+  }
+  nav ul { list-style:none; display:flex; gap:2.5rem; }
+  nav a {
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.18em;
+    color: var(--stone); text-decoration: none; text-transform: uppercase;
+    font-family: 'Jost', sans-serif; transition: color .2s;
+  }
+  nav a:hover { color: var(--terra); }
+
+  /* HERO */
+  .hero {
+    margin-top: 58px;
+    display: grid; grid-template-columns: 3fr 2fr;
+    min-height: calc(100vh - 58px);
+  }
+  .hero-img-wrap { position: relative; overflow: hidden; }
+  .hero-img-wrap img {
+    height: 100%; object-fit: cover;
+    transition: transform 8s ease;
+  }
+  .hero-img-wrap:hover img { transform: scale(1.04); }
+  .hero-img-overlay {
+    position: absolute; inset:0;
+    background: linear-gradient(to right, rgba(27,42,64,0.2), transparent 60%);
+  }
+  .hero-content {
+    background: var(--bg2);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 4.5rem 4rem;
+    position: relative;
+  }
+  .hero-content::before {
+    content: '';
+    position: absolute; top:0; left:0; bottom:0; width:4px;
+    background: linear-gradient(to bottom, transparent, var(--terra) 30%, var(--gold) 70%, transparent);
+  }
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif; font-size: 0.6rem;
+    letter-spacing: 0.45em; color: var(--terra); text-transform: uppercase;
+    margin-bottom: 1.8rem;
+    animation: fadeUp .8s .2s both;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 4.5vw, 5rem);
+    line-height: 1.0; color: var(--navy);
+    animation: fadeUp .8s .35s both;
+  }
+  .hero h1 em { font-style: italic; color: var(--terra); display: block; }
+  .hero-sub {
+    margin-top: 2rem; font-size: 1rem; line-height: 1.85;
+    color: var(--stone); max-width: 360px;
+    animation: fadeUp .8s .5s both;
+  }
+  .hero-stats {
+    margin-top: 3rem; display: flex; gap: 2rem;
+    animation: fadeUp .8s .65s both;
+  }
+  .stat-num {
+    font-family: 'DM Serif Display', serif; font-size: 2rem;
+    color: var(--navy); line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.6rem; letter-spacing: 0.2em;
+    color: var(--stone); text-transform: uppercase; margin-top: 0.3rem;
+  }
+  .stat-div { width:1px; background: var(--bg3); }
+
+  /* INTRO BANNER */
+  .intro-banner {
+    background: var(--navy); padding: 2.8rem 3.5rem;
+    display: flex; align-items: center; gap: 4rem;
+  }
+  .intro-banner-label {
+    font-family: 'Cinzel', serif; font-size: 0.58rem;
+    letter-spacing: 0.4em; color: var(--terra);
+    text-transform: uppercase; white-space: nowrap; flex-shrink: 0;
+  }
+  .intro-banner-text {
+    font-family: 'DM Serif Display', serif; font-style: italic;
+    font-size: clamp(1rem, 1.8vw, 1.45rem);
+    color: rgba(250,250,247,0.85); line-height: 1.5;
+  }
+  .intro-banner-line { flex:1; height:1px; background: rgba(255,255,255,0.1); }
+
+  /* SECTION LABEL */
+  .sec-label {
+    font-family: 'Cinzel', serif; font-size: 0.58rem;
+    letter-spacing: 0.45em; color: var(--terra); text-transform: uppercase;
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
+  }
+  .sec-label::after { content:''; flex:1; max-width:70px; height:1px; background: var(--bg3); }
+
+  /* ERAS HEADER */
+  .eras-header {
+    text-align: center; padding: 6rem 2rem 4rem;
+  }
+  .eras-header .sec-label { justify-content: center; }
+  .eras-header .sec-label::after { display: none; }
+  .eras-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4.5vw, 3.8rem);
+    color: var(--navy); line-height: 1.1;
+  }
+  .eras-header h2 em { font-style: italic; color: var(--terra); }
+  .eras-header p {
+    margin: 1.2rem auto 0; font-size: 1rem; color: var(--stone);
+    max-width: 520px; line-height: 1.8;
+  }
+
+  /* ERA BLOCKS */
+  .era-block {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 560px;
+    opacity: 0; transform: translateY(44px);
+    transition: opacity .9s ease, transform .9s ease;
+  }
+  .era-block.vis { opacity:1; transform: translateY(0); }
+  .era-block:nth-child(even) .era-img { order: 2; }
+  .era-block:nth-child(even) .era-info { order: 1; }
+
+  .era-img { position:relative; overflow:hidden; min-height:480px; }
+  .era-img img { height:100%; object-fit:cover; transition: transform .65s ease; }
+  .era-block:hover .era-img img { transform: scale(1.06); }
+  .era-img-cap {
+    position: absolute; bottom:0; left:0; right:0;
+    background: linear-gradient(to top, rgba(27,42,64,0.65), transparent);
+    padding: 2rem 2rem 1.2rem;
+  }
+  .era-img-cap span {
+    font-family: 'Cinzel', serif; font-size: 0.52rem;
+    letter-spacing: 0.28em; color: rgba(255,255,255,0.72);
+    text-transform: uppercase;
+  }
+
+  .era-info {
+    background: var(--white); padding: 4.5rem 4rem;
+    display: flex; flex-direction: column; justify-content: center;
+    border-left: 4px solid var(--bg3); position: relative;
+  }
+  .era-block:nth-child(even) .era-info { border-left: none; border-right: 4px solid var(--bg3); }
+
+  .era-num {
+    position: absolute; top: 2rem; right: 2.5rem;
+    font-family: 'DM Serif Display', serif; font-size: 6rem;
+    color: var(--bg2); line-height: 1; pointer-events: none; user-select: none;
+  }
+  .era-info h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.7rem, 2.8vw, 2.5rem);
+    color: var(--navy); line-height: 1.15; margin-bottom: 0.4rem;
+  }
+  .era-info h3 em { font-style: italic; color: var(--terra); }
+  .era-dates {
+    font-family: 'Cinzel', serif; font-size: 0.62rem;
+    letter-spacing: 0.25em; color: var(--gold);
+    margin-bottom: 1.8rem; padding-bottom: 1.8rem;
+    border-bottom: 1px solid var(--bg3);
+  }
+  .era-info p { font-size: 0.97rem; line-height: 1.9; color: var(--stone); margin-bottom: 1.1rem; }
+  .era-tags { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.2rem; }
+  .era-tag {
+    font-size: 0.62rem; font-weight: 500; letter-spacing: 0.1em;
+    background: var(--bg2); color: var(--navy);
+    padding: .35rem .85rem; border: 1px solid var(--bg3);
+    text-transform: uppercase; font-family: 'Jost', sans-serif;
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .era-tag:hover { background: var(--terra); border-color: var(--terra); color: #fff; }
+
+  /* PULLQUOTE */
+  .pullquote {
+    background: var(--bg2); padding: 7rem 4rem;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .pullquote::before {
+    content: '«';
+    position: absolute; top: -2rem; left: 50%; transform: translateX(-50%);
+    font-family: 'DM Serif Display', serif;
+    font-size: 16rem; color: var(--bg3); line-height: 1;
+    pointer-events: none;
+  }
+  .pullquote blockquote {
+    font-family: 'DM Serif Display', serif; font-style: italic;
+    font-size: clamp(1.4rem, 3vw, 2.5rem);
+    color: var(--navy); max-width: 860px; margin: 0 auto 2rem;
+    line-height: 1.5; position: relative;
+  }
+  .pullquote cite {
+    font-family: 'Cinzel', serif; font-size: 0.62rem;
+    letter-spacing: 0.4em; color: var(--terra); font-style: normal;
+    text-transform: uppercase;
+  }
+
+  /* PRINCIPLES */
+  #principles { background: var(--white); padding: 7rem 3.5rem; }
+  .section-hdr { margin-bottom: 4rem; }
+  .section-hdr h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem); color: var(--navy);
+  }
+  .section-hdr h2 em { font-style: italic; color: var(--terra); }
+  .principles-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--bg3); border: 1px solid var(--bg3);
+  }
+  .p-card {
+    background: var(--white); padding: 3rem 2.5rem;
+    position: relative; overflow: hidden;
+    transition: background .3s;
+  }
+  .p-card::after {
+    content: ''; position: absolute; bottom:0; left:0; right:0; height:3px;
+    background: linear-gradient(to right, var(--terra), var(--gold));
+    transform: scaleX(0); transform-origin: left; transition: transform .4s ease;
+  }
+  .p-card:hover { background: var(--bg); }
+  .p-card:hover::after { transform: scaleX(1); }
+  .p-idx {
+    font-family: 'DM Serif Display', serif; font-size: 3.5rem;
+    color: var(--bg2); line-height: 1; margin-bottom: 1.2rem;
+    transition: color .3s;
+  }
+  .p-card:hover .p-idx { color: var(--terra); opacity: .22; }
+  .p-card h3 {
+    font-family: 'DM Serif Display', serif; font-size: 1.3rem;
+    color: var(--navy); margin-bottom: .8rem;
+  }
+  .p-card p { font-size: .9rem; line-height: 1.85; color: var(--stone); }
+
+  /* FULL-BLEED */
+  .full-bleed {
+    position: relative; height: 62vh; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .full-bleed img {
+    position: absolute; inset:0;
+    width:100%; height:100%; object-fit: cover;
+    transform: scale(1.1);
+    transition: transform 0s;
+  }
+  .full-bleed-overlay {
+    position: absolute; inset:0;
+    background: linear-gradient(to bottom, rgba(27,42,64,.25), rgba(27,42,64,.55));
+  }
+  .full-bleed-text { position: relative; text-align: center; padding: 2rem; }
+  .full-bleed-text h2 {
+    font-family: 'DM Serif Display', serif; font-style: italic;
+    font-size: clamp(2rem, 6vw, 5.5rem);
+    color: #fff; line-height: 1.05;
+    text-shadow: 0 2px 20px rgba(0,0,0,.25);
+  }
+  .full-bleed-text p {
+    margin-top: 1rem; font-size: .95rem;
+    color: rgba(255,255,255,.7); letter-spacing: .12em;
+  }
+
+  /* LANDMARKS */
+  #iconic { background: var(--bg); padding: 7rem 3.5rem; }
+  .landmarks-grid {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem;
+  }
+  .l-card {
+    background: var(--white); border: 1px solid var(--bg3);
+    overflow: hidden;
+    transition: transform .35s ease, box-shadow .35s ease;
+  }
+  .l-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 48px rgba(27,42,64,.1);
+  }
+  .l-img { position: relative; overflow: hidden; height: 200px; }
+  .l-img img { height:100%; object-fit: cover; transition: transform .5s ease; }
+  .l-card:hover .l-img img { transform: scale(1.08); }
+  .l-badge {
+    position: absolute; top:.75rem; left:.75rem;
+    font-family: 'Cinzel', serif; font-size: .48rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    background: var(--terra); color: #fff; padding: .28rem .65rem;
+  }
+  .l-body {
+    padding: 1.4rem 1.4rem 1.7rem;
+    border-top: 3px solid var(--bg2);
+    transition: border-color .3s;
+  }
+  .l-card:hover .l-body { border-top-color: var(--terra); }
+  .l-year {
+    font-family: 'Cinzel', serif; font-size: .53rem;
+    letter-spacing: .25em; color: var(--gold); margin-bottom: .5rem;
+    text-transform: uppercase;
+  }
+  .l-card h4 {
+    font-family: 'DM Serif Display', serif; font-size: 1.05rem;
+    color: var(--navy); margin-bottom: .65rem; line-height: 1.2;
+  }
+  .l-card p { font-size: .8rem; line-height: 1.75; color: var(--stone); }
+
+  /* FOOTER */
+  footer { background: var(--navy); padding: 5rem 3.5rem 3rem; }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem;
+    padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .footer-brand h3 {
+    font-family: 'Cinzel', serif; font-size: .95rem;
+    letter-spacing: .25em; color: #fff; margin-bottom: 1rem;
+  }
+  .footer-brand p { font-size: .85rem; line-height: 1.85; color: rgba(255,255,255,.38); max-width: 300px; }
+  .footer-col h4 {
+    font-family: 'Cinzel', serif; font-size: .58rem;
+    letter-spacing: .3em; color: var(--terra); text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li {
+    font-size: .82rem; color: rgba(255,255,255,.38);
+    padding: .32rem 0; transition: color .2s;
+  }
+  .footer-col li:hover { color: rgba(255,255,255,.75); }
+  .footer-bottom {
+    padding-top: 2rem; text-align: center;
+    font-size: .72rem; color: rgba(255,255,255,.18); letter-spacing: .12em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(14px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    .landmarks-grid { grid-template-columns: repeat(2,1fr); }
+  }
+  @media (max-width: 900px) {
+    .landmarks-grid { grid-template-columns: repeat(2,1fr); }
+  }
+  @media (max-width: 780px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-img-wrap { height: 50vh; }
+    .hero-content { padding: 3rem 2rem 4rem; }
+    .intro-banner { flex-direction: column; gap: 1.2rem; padding: 2rem 1.5rem; }
+    .era-block { grid-template-columns: 1fr; }
+    .era-block:nth-child(even) .era-img { order: 0; }
+    .era-block:nth-child(even) .era-info { order: 0; border-right: none; border-left: 4px solid var(--bg3); }
+    .era-info { padding: 3rem 2rem; }
+    .principles-grid { grid-template-columns: 1fr; }
+    .landmarks-grid { grid-template-columns: 1fr; }
+    #principles, #iconic, .eras-header { padding: 5rem 1.5rem; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    footer { padding: 3rem 1.5rem; }
+  }
+
+  /* ── AI CHAT ── */
+  #ai-fab{position:fixed;bottom:1.8rem;right:1.8rem;z-index:600;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--terra),var(--gold));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(181,90,53,.5);transition:transform .25s ease,box-shadow .25s ease}
+  #ai-fab:hover{transform:scale(1.08);box-shadow:0 12px 36px rgba(181,90,53,.6)}
+  #ai-fab svg{width:22px;height:22px;fill:#fff}
+  #ai-fab .fab-label{position:absolute;bottom:-1.4rem;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.18em;color:var(--terra);white-space:nowrap;text-transform:uppercase}
+  #ai-panel{position:fixed;top:0;right:0;bottom:0;z-index:599;width:400px;background:var(--bg);border-left:1px solid var(--bg3);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);box-shadow:-14px 0 55px rgba(27,42,64,.13)}
+  #ai-panel.open{transform:translateX(0)}
+  .ai-head{background:var(--navy);padding:1.3rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+  .ai-head-left{display:flex;align-items:center;gap:.8rem}
+  .ai-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--terra),var(--gold));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .ai-avatar svg{width:16px;height:16px;fill:#fff}
+  .ai-title{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.28em;color:#fff;text-transform:uppercase}
+  .ai-subtitle{font-size:.66rem;color:rgba(255,255,255,.4);margin-top:.12rem;font-family:'Jost',sans-serif}
+  .ai-close-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.4);font-size:1.5rem;line-height:1;padding:.25rem;transition:color .2s}
+  .ai-close-btn:hover{color:#fff}
+  .ai-msgs{flex:1;overflow-y:auto;padding:1.3rem 1.3rem .7rem;display:flex;flex-direction:column;gap:1rem;scroll-behavior:smooth}
+  .ai-msgs::-webkit-scrollbar{width:3px}
+  .ai-msgs::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:3px}
+  .msg{display:flex;gap:.65rem;align-items:flex-start}
+  .msg.user{flex-direction:row-reverse}
+  .msg-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.6rem;font-family:'Cinzel',serif;font-weight:600;margin-top:2px}
+  .msg.assistant .msg-av{background:linear-gradient(135deg,var(--terra),var(--gold));color:#fff}
+  .msg.user .msg-av{background:var(--bg3);color:var(--navy)}
+  .msg-bub{padding:.8rem 1rem;font-size:.8rem;line-height:1.75;max-width:calc(100% - 42px)}
+  .msg.assistant .msg-bub{background:var(--white);border:1px solid var(--bg3);color:var(--text);border-radius:0 6px 6px 6px}
+  .msg.user .msg-bub{background:var(--navy);color:rgba(255,255,255,.88);border-radius:6px 0 6px 6px}
+  .typing{display:flex;gap:4px;align-items:center;padding:.2rem 0}
+  .typing span{width:5px;height:5px;border-radius:50%;background:var(--light);animation:tdot 1.2s ease-in-out infinite}
+  .typing span:nth-child(2){animation-delay:.2s}
+  .typing span:nth-child(3){animation-delay:.4s}
+  @keyframes tdot{0%,80%,100%{transform:scale(1);opacity:.4}40%{transform:scale(1.45);opacity:1}}
+  .ai-chips{padding:0 1.3rem .8rem;display:flex;flex-wrap:wrap;gap:.4rem;flex-shrink:0}
+  .chip{font-family:'Jost',sans-serif;font-size:.66rem;font-weight:500;background:var(--white);border:1px solid var(--bg3);color:var(--stone);padding:.3rem .75rem;cursor:pointer;transition:all .2s}
+  .chip:hover{background:var(--terra);border-color:var(--terra);color:#fff}
+  .ai-input-wrap{padding:.9rem 1.3rem 1.1rem;border-top:1px solid var(--bg3);display:flex;gap:.65rem;align-items:flex-end;flex-shrink:0;background:var(--bg)}
+  #ai-input{flex:1;resize:none;border:1px solid var(--bg3);background:var(--white);padding:.7rem .9rem;font-family:'Jost',sans-serif;font-size:.8rem;color:var(--text);line-height:1.5;outline:none;min-height:40px;max-height:110px;transition:border-color .2s;border-radius:2px}
+  #ai-input:focus{border-color:var(--terra)}
+  #ai-input::placeholder{color:var(--light)}
+  #ai-send{width:40px;height:40px;border:none;background:var(--terra);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;flex-shrink:0;border-radius:2px}
+  #ai-send:hover{background:var(--navy)}
+  #ai-send:disabled{background:var(--bg3);cursor:not-allowed}
+  #ai-send svg{width:17px;height:17px;fill:#fff}
+  @media(max-width:500px){#ai-panel{width:100%}}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">L'Architecture Française</div>
+  <ul>
+    <li><a href="#eras">Eras</a></li>
+    <li><a href="#principles">Principles</a></li>
+    <li><a href="#iconic">Landmarks</a></li>
+    <li><a href="#" onclick="toggleChat();return false;" style="color:var(--terra);font-weight:500">Ask AI ✦</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-img-wrap">
+    <img
+      src="https://images.unsplash.com/photo-1431887573168-c44be7e8e6bc?auto=format&fit=crop&w=1400&q=85"
+      alt="Notre-Dame de Paris"
+      onerror="this.src='https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=1400&q=85'"
+    >
+    <div class="hero-img-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">A visual journey · Mille ans d'architecture</p>
+    <h1>French<br><em>Architecture</em></h1>
+    <p class="hero-sub">From soaring Gothic cathedrals to bold modernist icons — a nation that built its identity in stone, glass, and iron across a thousand years.</p>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">1,000</div>
+        <div class="stat-label">Years of history</div>
+      </div>
+      <div class="stat-div"></div>
+      <div>
+        <div class="stat-num">6</div>
+        <div class="stat-label">Defining eras</div>
+      </div>
+      <div class="stat-div"></div>
+      <div>
+        <div class="stat-num">40+</div>
+        <div class="stat-label">UNESCO sites</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO BANNER -->
+<div class="intro-banner">
+  <span class="intro-banner-label">Our thesis</span>
+  <p class="intro-banner-text">"No country has expressed its cultural ambitions through architecture as consistently and boldly as France."</p>
+  <div class="intro-banner-line"></div>
+</div>
+
+<!-- ERAS -->
+<section id="eras">
+  <div class="eras-header">
+    <div class="sec-label" style="justify-content:center;">Six centuries of design</div>
+    <h2>The Great <em>Architectural Eras</em></h2>
+    <p>Each period left monuments that define not just French identity, but the entire trajectory of Western design.</p>
+  </div>
+
+  <!-- GOTHIC -->
+  <div class="era-block">
+    <div class="era-img">
+      <img
+        src="https://imgs.search.brave.com/byroYvT9fhN9B7byv0ZR91UxwOykdX7Odvbt7Lg5dhk/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtbHV4ZS5vdXRs/b29raW5kaWEuY29t/LzIwMjUvMTEvMDQw/ODIzMTYvR2V0dHlJ/bWFnZXMtMTM2OTcw/MDM2MC0xMDI0eDEw/MjQud2VicA?auto=format&fit=crop&w=900&q=85"
+        alt="Notre-Dame de Paris"
+        onerror="this.parentElement.style.background='#c8d4e0'"
+      >
+      <div class="era-img-cap"><span>Notre-Dame de Paris · Île-de-France</span></div>
+    </div>
+    <div class="era-info">
+      <div class="era-num">I</div>
+      <div class="sec-label">Era One</div>
+      <h3>Gothic <em>Grandeur</em></h3>
+      <div class="era-dates">c. 1140 — 1500 AD</div>
+      <p>Gothic architecture emerged from the Île-de-France, transforming the heavy Romanesque church into a framework of light. The pointed arch, ribbed vault, and flying buttress allowed stone walls to dissolve into soaring stained glass — theology made tangible in stone.</p>
+      <p>Abbot Suger's Saint-Denis pioneered the form, but Notre-Dame de Paris codified it: twin towers, a rose window, three sculpted portals, all reaching heavenward with unprecedented ambition.</p>
+      <div class="era-tags">
+        <span class="era-tag">Notre-Dame de Paris</span>
+        <span class="era-tag">Chartres Cathedral</span>
+        <span class="era-tag">Sainte-Chapelle</span>
+        <span class="era-tag">Reims Cathedral</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RENAISSANCE -->
+  <div class="era-block">
+    <div class="era-img">
+      <img
+        src="https://imgs.search.brave.com/cSdHuei9BOnRfFaDEnPjpsLCEtW9ByOCViZknXKfgH4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/YWZyZW5jaGNvbGxl/Y3Rpb24uY29tL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDI0LzEy/L0NoYXRlYXUtZGUt/Q2hlbm9uY2VhdS1M/b2lyZS1WYWxsZXkt/Y2hhdGVhdS1mcm9t/LWdhcmRlbi0xMDI0/LXgtNzUwLmpwZw?auto=format&fit=crop&w=950&q=85"
+        alt="Loire Valley Château"
+        onerror="this.src='https://imgs.search.brave.com/XPAw42u1x33ntkC3mCgLRKachJubeuy895bUgYrLCg4/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93b29k/eS5jbG91ZGx5LnNw/YWNlL2FwcC91cGxv/YWRzL2FkdC10b3Vy/YWluZS8yMDI0LzEx/L3RodW1icy9DaGF0/ZWF1LUNoZW5vbmNl/YXUtQ3JlZGl0LUFE/VC1Ub3VyYWluZS1U/b20tQmVzc2UtMjAz/Mi0xMS02NDB4MzIw/LWNyb3AtMTczMTU5/ODg3Ni53ZWJw?auto=format&fit=crop&w=900&q=85'; this.onerror=null;"
+      >
+      <div class="era-img-cap"><span>Loire Valley · Centre-Val de Loire</span></div>
+    </div>
+    <div class="era-info">
+      <div class="era-num">II</div>
+      <div class="sec-label">Era Two</div>
+      <h3>Renaissance <em>Châteaux</em></h3>
+      <div class="era-dates">c. 1494 — 1610 AD</div>
+      <p>French kings returning from Italian campaigns imported a new visual language: classical symmetry, pilasters, loggias, and delicate sculptural ornament. The Loire Valley became the laboratory for a brilliant Franco-Italian synthesis.</p>
+      <p>Chambord, designed possibly with Leonardo da Vinci's input, fuses a medieval castle plan with Renaissance decoration. Its legendary double-helix staircase — two spirals intertwining but never meeting — remains one of architecture's most poetic inventions.</p>
+      <div class="era-tags">
+        <span class="era-tag">Château de Chambord</span>
+        <span class="era-tag">Château de Chenonceau</span>
+        <span class="era-tag">Fontainebleau</span>
+        <span class="era-tag">The Louvre Palace</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAROQUE -->
+  <div class="era-block">
+    <div class="era-img">
+      <img
+        src="https://imgs.search.brave.com/GBRUTXYSzCdYTC79N0MvRwp5giktz47tcuNMMEvIGrc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9mYWNh/ZGUtdmVyc2FpbGxl/cy1wYWxhY2Utb3V0/c2lkZS1wYXJpcy1m/cmFuY2UtMzk4OTk4/OTA1LmpwZw?auto=format&fit=crop&w=700&q=55"
+        alt="Palace of Versailles"
+        onerror="this.src='https://imgs.search.brave.com/GBRUTXYSzCdYTC79N0MvRwp5giktz47tcuNMMEvIGrc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9mYWNh/ZGUtdmVyc2FpbGxl/cy1wYWxhY2Utb3V0/c2lkZS1wYXJpcy1m/cmFuY2UtMzk4OTk4/OTA1LmpwZw?auto=format&fit=crop&w=900&q=85'; this.onerror=null;"
+      >
+      <div class="era-img-cap"><span>Palace of Versailles · Yvelines</span></div>
+    </div>
+    <div class="era-info">
+      <div class="era-num">III</div>
+      <div class="sec-label">Era Three</div>
+      <h3>Baroque <em>Absolutism</em></h3>
+      <div class="era-dates">c. 1610 — 1789 AD</div>
+      <p>Under Louis XIV, French architecture became an instrument of state power. The Palace of Versailles — designed by Jules Hardouin-Mansart and landscaped by André Le Nôtre — is the supreme expression of royal absolutism: an axis of symmetry stretching to the horizon, gardens that bend nature to human will.</p>
+      <p>French Classicism, distinct from Italian Baroque in its restraint, produced the Louvre Colonnade, the Hôtel des Invalides, and Place Vendôme — urban spaces conceived as theatrical settings for monarchy.</p>
+      <div class="era-tags">
+        <span class="era-tag">Palace of Versailles</span>
+        <span class="era-tag">Hôtel des Invalides</span>
+        <span class="era-tag">Place Vendôme</span>
+        <span class="era-tag">Vaux-le-Vicomte</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HAUSSMANN -->
+  <div class="era-block">
+    <div class="era-img">
+      <img
+        src="https://imgs.search.brave.com/gYA6r6vd_JApEXC9VvJuSq79sb594ZfUl1EN9blw8gE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMjIx/MDI0MzIwMi9waG90/by9wYXJpcy1mcmFu/Y2UuanBnP3M9NjEy/eDYxMiZ3PTAmaz0y/MCZjPXphbWp0ZFRF/ZnhrRVh0X05zRzlu/YW44ajJLZEo1OWJz/VHlUUExTazlVU2s9?auto=format&fit=crop&w=900&q=85"
+        alt="Haussmann Paris boulevard"
+        onerror="this.src='https://imgs.search.brave.com/gYA6r6vd_JApEXC9VvJuSq79sb594ZfUl1EN9blw8gE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMjIx/MDI0MzIwMi9waG90/by9wYXJpcy1mcmFu/Y2UuanBnP3M9NjEy/eDYxMiZ3PTAmaz0y/MCZjPXphbWp0ZFRF/ZnhrRVh0X05zRzlu/YW44ajJLZEo1OWJz/VHlUUExTazlVU2s9?auto=format&fit=crop&w=900&q=85'; this.onerror=null;"
+      >
+      <div class="era-img-cap"><span>Haussmann Boulevard · Paris, France</span></div>
+    </div>
+    <div class="era-info">
+      <div class="era-num">IV</div>
+      <div class="sec-label">Era Four</div>
+      <h3>Haussmann's <em>Paris</em></h3>
+      <div class="era-dates">c. 1853 — 1870 AD</div>
+      <p>Baron Georges-Eugène Haussmann, under Napoleon III, demolished medieval Paris and replaced it with the city we know today: wide boulevards, uniform limestone apartment buildings with mansard roofs, and a unified streetscape of extraordinary elegance.</p>
+      <p>This was urban design at civilisational scale — 60% of the city demolished and rebuilt in 17 years. The Haussmann apartment's strict cornice line, wrought-iron balconies, and cream stone façades became the defining image of Paris.</p>
+      <div class="era-tags">
+        <span class="era-tag">Palais Garnier</span>
+        <span class="era-tag">Boulevard Haussmann</span>
+        <span class="era-tag">Place de l'Étoile</span>
+        <span class="era-tag">Bois de Boulogne</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ART NOUVEAU -->
+  <div class="era-block">
+    <div class="era-img">
+      <img
+        src="https://images.unsplash.com/photo-1549144511-f099e773c147?auto=format&fit=crop&w=900&q=85"
+        alt="Art Nouveau Paris"
+        onerror="this.src='https://images.unsplash.com/photo-1431887573168-c44be7e8e6bc?auto=format&fit=crop&w=900&q=85'; this.onerror=null;"
+      >
+      <div class="era-img-cap"><span>Art Nouveau Ironwork · Paris Metro</span></div>
+    </div>
+    <div class="era-info">
+      <div class="era-num">V</div>
+      <div class="sec-label">Era Five</div>
+      <h3>Art Nouveau <em>Organicism</em></h3>
+      <div class="era-dates">c. 1890 — 1910 AD</div>
+      <p>Art Nouveau was a rebellion against industrial ugliness, insisting that every element — a balcony railing, a door handle, a Metro entrance — could and should be beautiful. Taking cues from plant growth, it produced architecture that seems to breathe and grow.</p>
+      <p>Hector Guimard's Paris Métro entrances — iron arches shaped like dragonfly wings, glazed in olive enamel — brought this aesthetic to the entire city. Nancy became the movement's second great capital.</p>
+      <div class="era-tags">
+        <span class="era-tag">Paris Métro Entrances</span>
+        <span class="era-tag">Castel Béranger</span>
+        <span class="era-tag">Maison Lavirotte</span>
+        <span class="era-tag">Villa Majorelle, Nancy</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODERN -->
+  <div class="era-block">
+    <div class="era-img">
+      <img
+        src="https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=900&q=85"
+        alt="Eiffel Tower Paris"
+        onerror="this.src='https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=900&q=85'; this.onerror=null;"
+      >
+      <div class="era-img-cap"><span>Tour Eiffel · Champ de Mars, Paris</span></div>
+    </div>
+    <div class="era-info">
+      <div class="era-num">VI</div>
+      <div class="sec-label">Era Six</div>
+      <h3>Modern & <em>Contemporary</em></h3>
+      <div class="era-dates">c. 1889 — Present</div>
+      <p>Le Corbusier redefined architecture for the 20th century from French soil: his five points — pilotis, free plan, free façade, ribbon window, roof garden — became the grammar of modernism worldwide. His Villa Savoye (1929) is architecture's most influential built manifesto.</p>
+      <p>France continued its bold tradition: the Centre Pompidou's inside-out structure (Piano & Rogers, 1977), the Louvre Pyramid (1989), and the Grande Arche de La Défense proved a tradition-steeped nation could still shock the world with audacity.</p>
+      <div class="era-tags">
+        <span class="era-tag">Villa Savoye</span>
+        <span class="era-tag">Centre Pompidou</span>
+        <span class="era-tag">Louvre Pyramid</span>
+        <span class="era-tag">Grande Arche</span>
+        <span class="era-tag">Philharmonie de Paris</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PULLQUOTE -->
+<div class="pullquote">
+  <blockquote>"Architecture is the will of an epoch translated into space."</blockquote>
+  <cite>Le Corbusier — Architect, Urbanist &amp; Theorist</cite>
+</div>
+
+<!-- PRINCIPLES -->
+<section id="principles">
+  <div class="section-hdr">
+    <div class="sec-label">Design philosophy</div>
+    <h2>Core Principles of <em>French Design</em></h2>
+  </div>
+  <div class="principles-grid">
+    <div class="p-card">
+      <div class="p-idx">01</div>
+      <h3>Axial Symmetry</h3>
+      <p>From Versailles to La Défense, French urban design organizes itself along powerful axes. The Grand Axe stretching from the Louvre through the Arc de Triomphe to the Grande Arche is 8km of pure geometric ambition.</p>
+    </div>
+    <div class="p-card">
+      <div class="p-idx">02</div>
+      <h3>Civic Grandeur</h3>
+      <p>French architecture insists that public buildings must impress and elevate. Streets, squares, and monuments are designed as stages for civic life — beauty is a democratic right, not a private luxury.</p>
+    </div>
+    <div class="p-card">
+      <div class="p-idx">03</div>
+      <h3>Rational Ornament</h3>
+      <p>Unlike Italian Baroque's profuse decoration, French classicism submits ornamentation to reason. Every carved capital and iron railing has logic and proportion — exuberant but never chaotic.</p>
+    </div>
+    <div class="p-card">
+      <div class="p-idx">04</div>
+      <h3>Material Honesty</h3>
+      <p>French limestone is never hidden. Le Corbusier's concrete and Piano's exposed steel are equally direct. French architects celebrate the truth of their materials rather than disguising them behind surface treatments.</p>
+    </div>
+    <div class="p-card">
+      <div class="p-idx">05</div>
+      <h3>Light as Structure</h3>
+      <p>From Gothic rose windows to Pei's glass pyramid, French architecture has always used light as a building material. The dissolution of mass into luminosity — letting sky inside stone — is a constant obsession.</p>
+    </div>
+    <div class="p-card">
+      <div class="p-idx">06</div>
+      <h3>Radical Continuity</h3>
+      <p>France audaciously places new work beside old — the Pompidou beside the Marais, the Pyramid in the Louvre courtyard. The French tradition honours history by daring to extend it, never retreating into pastiche.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FULL BLEED PHOTO -->
+<div class="full-bleed">
+  <img
+    src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=1600&q=85"
+    alt="Louvre Pyramid Paris"
+    id="parallax-img"
+  >
+  <div class="full-bleed-overlay"></div>
+  <div class="full-bleed-text">
+    <h2>Paris — Capital<br>of Architecture</h2>
+    <p>The world's most visited city · Over 40 UNESCO World Heritage Sites in France</p>
+  </div>
+</div>
+
+<!-- LANDMARKS -->
+<section id="iconic">
+  <div class="section-hdr">
+    <div class="sec-label">Must-see monuments</div>
+    <h2>Six <em>Iconic Works</em></h2>
+  </div>
+  <div class="landmarks-grid">
+
+    <!-- 1. Notre-Dame de Paris -->
+    <div class="l-card">
+      <div class="l-img">
+        <img src="https://images.unsplash.com/photo-1478391679764-b2d8b3cd1e94?auto=format&fit=crop&w=600&q=80" alt="Notre-Dame de Paris"
+          onerror="this.src='https://images.unsplash.com/photo-1560818248-aba1b9f9c4d5?auto=format&fit=crop&w=600&q=80'; this.onerror=null;">
+        <span class="l-badge">Gothic</span>
+      </div>
+      <div class="l-body">
+        <div class="l-year">c. 1163 — 1345</div>
+        <h4>Notre-Dame de Paris</h4>
+        <p>The cathedral that defined Gothic architecture for a continent. Flying buttresses enabled walls of pure stained glass.</p>
+      </div>
+    </div>
+
+    <!-- 2. Château de Chambord -->
+    <div class="l-card">
+      <div class="l-img">
+        <img src="https://imgs.search.brave.com/QJGFy-6CZGy6O_Oz_8E9uqL5T_e9iv97drXhuzwSzv4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9jaGFt/Ym9yZC1jYXN0bGUt/Y2hhdGVhdS1kZS1j/YXN0bGVzLWludGVy/aW9yLXVuZXNjby1s/YXJnZXN0LWxvaXJl/LXZhbGxleS1vbmUt/bW9zdC13ZWxsLWtu/b3duLXZpc2l0ZWQt/d2FzLXJlc2lkZW5j/ZXMtMzc4MTkwNDA1/LmpwZw?auto=format&fit=crop&w=600&q=80" alt="Château de Chambord"
+          onerror="this.src='https://imgs.search.brave.com/QJGFy-6CZGy6O_Oz_8E9uqL5T_e9iv97drXhuzwSzv4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9jaGFt/Ym9yZC1jYXN0bGUt/Y2hhdGVhdS1kZS1j/YXN0bGVzLWludGVy/aW9yLXVuZXNjby1s/YXJnZXN0LWxvaXJl/LXZhbGxleS1vbmUt/bW9zdC13ZWxsLWtu/b3duLXZpc2l0ZWQt/d2FzLXJlc2lkZW5j/ZXMtMzc4MTkwNDA1/LmpwZw?auto=format&fit=crop&w=600&q=80'; this.onerror=null;">
+        <span class="l-badge">Renaissance</span>
+      </div>
+      <div class="l-body">
+        <div class="l-year">1519 — 1547</div>
+        <h4>Château de Chambord</h4>
+        <p>440 rooms, 365 fireplaces, and a double-helix staircase possibly designed with input from Leonardo da Vinci.</p>
+      </div>
+    </div>
+
+    <!-- 3. Palace of Versailles -->
+    <div class="l-card">
+      <div class="l-img">
+        <img src="https://imgs.search.brave.com/TAAqKg7JtHJZaRnROuTNcKiZTpj2HPlbq1WoSjpvSPg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dmVyc2FpbGxlcy1w/YWxhY2UuY29tL3dw/LWNvbnRlbnQvdXBs/b2Fkcy9lbGVtZW50/b3IvdGh1bWJzL2Fi/b3V0LXBhbGFjZS0y/LXZlcnNhaWxsZXMt/cGFsYWNlLTItc2Nh/bGVkLXE0amVuZjl3/OGoyOG9iejRsYzJh/dzE4NGZwY3VscmEw/N3FoanF4MGN5cy53/ZWJw?auto=format&fit=crop&w=600&q=80" alt="Palace of Versailles"
+          onerror="this.src='https://imgs.search.brave.com/TAAqKg7JtHJZaRnROuTNcKiZTpj2HPlbq1WoSjpvSPg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dmVyc2FpbGxlcy1w/YWxhY2UuY29tL3dw/LWNvbnRlbnQvdXBs/b2Fkcy9lbGVtZW50/b3IvdGh1bWJzL2Fi/b3V0LXBhbGFjZS0y/LXZlcnNhaWxsZXMt/cGFsYWNlLTItc2Nh/bGVkLXE0amVuZjl3/OGoyOG9iejRsYzJh/dzE4NGZwY3VscmEw/N3FoanF4MGN5cy53/ZWJw?auto=format&fit=crop&w=600&q=80'; this.onerror=null;">
+        <span class="l-badge">Baroque</span>
+      </div>
+      <div class="l-body">
+        <div class="l-year">1661 — 1710</div>
+        <h4>Palace of Versailles</h4>
+        <p>The apotheosis of absolute monarchy. The Hall of Mirrors alone stretches 73 magnificent metres.</p>
+      </div>
+    </div>
+
+    <!-- 4. Tour Eiffel -->
+    <div class="l-card">
+      <div class="l-img">
+        <img src="https://imgs.search.brave.com/k92s3GjFBJ7cClwJQ6OC-sn3Pg8sHq-VUkkaiFTlScE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMjI1/MTIwNjQ2OS9waG90/by9laWZmZWwtdG93/ZXItaW4tcGFyaXMt/YnktbmlnaHQud2Vi/cD9hPTEmYj0xJnM9/NjEyeDYxMiZ3PTAm/az0yMCZjPURXcEha/NnFBYWxMOUNTMXBV/dlc4T0VkTjVIRTNf/SjR5MWVtRkItcGlp/eVk9?auto=format&fit=crop&w=600&q=80" alt="Tour Eiffel"
+          onerror="this.src='https://imgs.search.brave.com/k92s3GjFBJ7cClwJQ6OC-sn3Pg8sHq-VUkkaiFTlScE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMjI1/MTIwNjQ2OS9waG90/by9laWZmZWwtdG93/ZXItaW4tcGFyaXMt/YnktbmlnaHQud2Vi/cD9hPTEmYj0xJnM9/NjEyeDYxMiZ3PTAm/az0yMCZjPURXcEha/NnFBYWxMOUNTMXBV/dlc4T0VkTjVIRTNf/SjR5MWVtRkItcGlp/eVk9?auto=format&fit=crop&w=600&q=80'; this.onerror=null;">
+        <span class="l-badge">Industrial</span>
+      </div>
+      <div class="l-body">
+        <div class="l-year">1889</div>
+        <h4>Tour Eiffel</h4>
+        <p>Built to be temporary. Now the most visited paid monument in the world — Paris's iconic iron signature.</p>
+      </div>
+    </div>
+
+    <!-- 5. Centre Pompidou -->
+    <div class="l-card">
+      <div class="l-img">
+        <img src="https://imgs.search.brave.com/ue8hO_-mKQGb2lkebsjjLFl-9821GZOd5gZT32fI78M/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/YXJ1cC5jb20vZ2xv/YmFsYXNzZXRzL2lt/YWdlcy9wcm9qZWN0/cy9jL2NlbnRyZS1w/b21waWRvdS9jZW50/cmUtcG9tcGlkb3Vj/LWFydXAyLmpwZz93/aWR0aD0xMjAwJmhl/aWdodD04MDImcXVh/bGl0eT04MA?auto=format&fit=crop&w=600&q=80" alt="Centre Pompidou"
+          onerror="this.src='https://imgs.search.brave.com/ue8hO_-mKQGb2lkebsjjLFl-9821GZOd5gZT32fI78M/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/YXJ1cC5jb20vZ2xv/YmFsYXNzZXRzL2lt/YWdlcy9wcm9qZWN0/cy9jL2NlbnRyZS1w/b21waWRvdS9jZW50/cmUtcG9tcGlkb3Vj/LWFydXAyLmpwZz93/aWR0aD0xMjAwJmhl/aWdodD04MDImcXVh/bGl0eT04MA?auto=format&fit=crop&w=600&q=80'; this.onerror=null;">
+        <span class="l-badge">Contemporary</span>
+      </div>
+      <div class="l-body">
+        <div class="l-year">1977</div>
+        <h4>Centre Pompidou</h4>
+        <p>Piano &amp; Rogers turned a cultural centre inside out — exposing structure and services as coloured tubes on the façade.</p>
+      </div>
+    </div>
+
+    <!-- 6. Louvre Pyramid -->
+    <div class="l-card">
+      <div class="l-img">
+        <img src="https://imgs.search.brave.com/8vRIpa8iUG8uxJ49eRot6eiXNMw0-cHJWAhlNrdMHfY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pMC53/cC5jb20vdGhlY29u/c3RydWN0b3Iub3Jn/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDIw/LzEwL3NtYWxsZXIt/cHlyYW1pZHMtZWRp/dGVkLmpwZz9yZXNp/emU9NTEwLDM0MCZz/c2w9MQ?auto=format&fit=crop&w=600&q=80" alt="Louvre Pyramid"
+          onerror="this.src='https://imgs.search.brave.com/8vRIpa8iUG8uxJ49eRot6eiXNMw0-cHJWAhlNrdMHfY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pMC53/cC5jb20vdGhlY29u/c3RydWN0b3Iub3Jn/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDIw/LzEwL3NtYWxsZXIt/cHlyYW1pZHMtZWRp/dGVkLmpwZz9yZXNp/emU9NTEwLDM0MCZz/c2w9MQ?auto=format&fit=crop&w=600&q=80'; this.onerror=null;">
+        <span class="l-badge">Contemporary</span>
+      </div>
+      <div class="l-body">
+        <div class="l-year">1989</div>
+        <h4>Louvre Pyramid</h4>
+        <p>I.M. Pei's glass pyramid — a perfect dialogue between old and new, now universally beloved.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>L'Architecture Française</h3>
+      <p>An editorial journey through a millennium of French architectural genius — from Gothic vaults to glass pyramids, from Versailles to La Défense.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Eras</h4>
+      <ul>
+        <li>Gothic · 1140–1500</li>
+        <li>Renaissance · 1494–1610</li>
+        <li>Baroque · 1610–1789</li>
+        <li>Haussmann · 1853–1870</li>
+        <li>Art Nouveau · 1890–1910</li>
+        <li>Modern · 1889–Present</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Key Regions</h4>
+      <ul>
+        <li>Île-de-France</li>
+        <li>Loire Valley</li>
+        <li>Provence</li>
+        <li>Normandy</li>
+        <li>Alsace</li>
+        <li>La Défense</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 L'Architecture Française · Images via Unsplash · Made with care
+  </div>
+</footer>
+
+<script>
+  // Era block scroll reveals
+  const eraBlocks = document.querySelectorAll('.era-block');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  eraBlocks.forEach(b => obs.observe(b));
+
+  // Principle cards stagger
+  const pcards = document.querySelectorAll('.p-card');
+  const pObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const i = [...pcards].indexOf(e.target);
+        e.target.style.transitionDelay = `${i * 75}ms`;
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        pObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  pcards.forEach(p => {
+    p.style.opacity = '0'; p.style.transform = 'translateY(22px)';
+    p.style.transition = 'opacity .55s ease, transform .55s ease, background .3s';
+    pObs.observe(p);
+  });
+
+  // Landmark cards stagger
+  const lcards = document.querySelectorAll('.l-card');
+  const lObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const i = [...lcards].indexOf(e.target);
+        setTimeout(() => {
+          e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)';
+        }, i * 55);
+        lObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.04 });
+  lcards.forEach(c => {
+    c.style.opacity = '0'; c.style.transform = 'translateY(18px)';
+    c.style.transition = 'opacity .5s ease, transform .5s ease, box-shadow .35s ease';
+    lObs.observe(c);
+  });
+
+  // Parallax on full-bleed photo
+  const pImg = document.getElementById('parallax-img');
+  if (pImg) {
+    window.addEventListener('scroll', () => {
+      const wrap = pImg.closest('.full-bleed');
+      const rect = wrap.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        const p = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        pImg.style.transform = `translateY(${(p - 0.5) * 55}px) scale(1.1)`;
+      }
+    }, { passive: true });
+  }
+</script>
+
+<!-- AI FAB -->
+<button id="ai-fab" onclick="toggleChat()" title="Ask about French Architecture">
+  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+  <span class="fab-label">Ask AI</span>
+</button>
+
+<!-- AI PANEL -->
+<div id="ai-panel">
+  <div class="ai-head">
+    <div class="ai-head-left">
+      <div class="ai-avatar"><svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.4 1.2 4.5 3 6l-1 3.5 3.7-1.9c1.3.5 2.8.9 4.3.9 5.5 0 10-3.6 10-8S17.5 3 12 3z"/></svg></div>
+      <div>
+        <div class="ai-title">Architecte IA</div>
+        <div class="ai-subtitle">Expert on French Architecture</div>
+      </div>
+    </div>
+    <button class="ai-close-btn" onclick="toggleChat()">&#215;</button>
+  </div>
+  <div class="ai-msgs" id="ai-msgs"></div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip" onclick="sendChip(this)">What defines French Gothic?</button>
+    <button class="chip" onclick="sendChip(this)">Who designed Versailles?</button>
+    <button class="chip" onclick="sendChip(this)">Le Corbusier's Five Points?</button>
+    <button class="chip" onclick="sendChip(this)">Haussmann's Paris renovation</button>
+    <button class="chip" onclick="sendChip(this)">Best Loire Valley châteaux?</button>
+    <button class="chip" onclick="sendChip(this)">How was Sainte-Chapelle built?</button>
+  </div>
+  <div class="ai-input-wrap">
+    <textarea id="ai-input" placeholder="Ask anything about French architecture…" rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+    <button id="ai-send" onclick="sendMsg()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+  </div>
+</div>
+
+<script>
+const SYS = "You are Architecte IA, an eloquent expert on French architecture across all eras — Gothic, Renaissance, Baroque, Haussmann, Art Nouveau, Modernism, and Contemporary. You speak with authority and warmth about buildings, architects, techniques, and cultural context. Key knowledge: Notre-Dame, Versailles, Louvre, Sainte-Chapelle, Chambord, Centre Pompidou, Eiffel Tower, Grande Arche, Villa Savoye, Philharmonie de Paris. Architects: Viollet-le-Duc, Hardouin-Mansart, Haussmann, Gustave Eiffel, Le Corbusier, Guimard, I.M. Pei, Jean Nouvel, Renzo Piano. Keep responses to 2-3 focused paragraphs. Use elegant, editorial language. If asked something unrelated to French architecture, politely redirect.";
+
+let history = [];
+let busy = false;
+
+function toggleChat() {
+  const panel = document.getElementById("ai-panel");
+  const fab = document.getElementById("ai-fab");
+  const opened = panel.classList.toggle("open");
+  fab.style.display = opened ? "none" : "flex";
+  // show only once
+  if (opened && !window.aiInitialized) {
+    appendMsg(
+      "assistant",
+      "Bonjour — I am Architecte IA, your expert guide to French architecture. From Gothic cathedrals like Notre-Dame to modern landmarks like the Louvre Pyramid, I can explain styles, history, architects, and design principles. What would you like to explore?"
+    );
+    window.aiInitialized = true;
+  }
+  if (opened) {
+    setTimeout(() => document.getElementById("ai-input").focus(), 420);
+  }
+}
+function appendMsg(role, html) {
+  const c = document.getElementById("ai-msgs");
+  const d = document.createElement("div");
+  d.className = "msg " + role;
+  d.innerHTML = "<div class=\"msg-av\">" + (role === "assistant" ? "AI" : "You") + "</div><div class=\"msg-bub\">" + html + "</div>";
+  c.appendChild(d);
+  c.scrollTop = c.scrollHeight;
+}
+
+function showTyping() {
+  const c = document.getElementById("ai-msgs");
+  const d = document.createElement("div");
+  d.className = "msg assistant";
+  d.id = "typing";
+  d.innerHTML =
+    "<div class='msg-av'>AI</div>" +
+    "<div class='msg-bub'>" +
+    "<div class='typing'><span></span><span></span><span></span></div>" +
+    "</div>";
+  c.appendChild(d);
+  c.scrollTop = c.scrollHeight;
+}
+
+function fmt(t) {
+  return t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+          .replace(/\*(.+?)\*/g, "<em>$1</em>")
+          .replace(/\n\n/g, "</p><p style=\"margin-top:.55rem\">")
+          .replace(/\n/g, "<br>");
+}
+
+let controller = null;
+let lastSent = 0;
+
+async function sendMsg() {
+  const inp = document.getElementById("ai-input");
+  const txt = inp.value.trim();
+  if (!txt || busy) return;
+
+  busy = true;
+  document.getElementById("ai-send").disabled = true;
+
+  // user message
+  appendMsg("user", txt);
+  history.push({ role: "user", content: txt });
+
+  inp.value = "";
+  inp.style.height = "auto";
+  document.getElementById("ai-chips").style.display = "none";
+
+  const container = document.getElementById("ai-msgs");
+
+  // ✅ SHOW TYPING DOTS
+  const typingDiv = document.createElement("div");
+  typingDiv.className = "msg assistant";
+  typingDiv.id = "typing";
+
+  typingDiv.innerHTML =
+    "<div class='msg-av'>AI</div>" +
+    "<div class='msg-bub'>" +
+    "<div class='typing'><span></span><span></span><span></span></div>" +
+    "</div>";
+
+  container.appendChild(typingDiv);
+  container.scrollTop = container.scrollHeight;
+
+  try {
+    const res = await fetch("http://localhost:8000", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        system: SYS,
+        messages: history
+      })
+    });
+
+    if (!res.ok) {
+      throw new Error("Server error: " + res.status);
+    }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+
+    let fullText = "";
+
+    // ✅ REMOVE TYPING DOTS
+    const typingEl = document.getElementById("typing");
+    if (typingEl) typingEl.remove();
+
+    // ✅ CREATE NEW MESSAGE (FIXED BUG)
+    const msgDiv = document.createElement("div");
+    msgDiv.className = "msg assistant";
+
+    const id = "stream-" + Date.now(); // unique ID
+
+    msgDiv.innerHTML =
+      "<div class='msg-av'>AI</div>" +
+      "<div class='msg-bub' id='" + id + "'></div>";
+
+    container.appendChild(msgDiv);
+    container.scrollTop = container.scrollHeight;
+
+    const streamEl = document.getElementById(id);
+
+    // ✅ STREAM RESPONSE
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      const chunk = decoder.decode(value);
+      fullText += chunk;
+
+      streamEl.innerHTML = fmt(fullText);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    history.push({ role: "assistant", content: fullText });
+
+  } catch (e) {
+    console.error("Frontend error:", e);
+
+    // remove typing if still there
+    const typingEl = document.getElementById("typing");
+    if (typingEl) typingEl.remove();
+
+    appendMsg("assistant", "⚠️ Backend error. Check Ollama/server.");
+  }
+
+  busy = false;
+  document.getElementById("ai-send").disabled = false;
+  document.getElementById("ai-input").focus();
+}
+
+function sendChip(btn) { document.getElementById("ai-input").value = btn.textContent; sendMsg(); }
+function handleKey(e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMsg(); } }
+function autoResize(el) { el.style.height = "auto"; el.style.height = Math.min(el.scrollHeight, 110) + "px"; }
+</script>
+
+</body>
+</html>
