@@ -395,10 +395,10 @@
   }
 
   /* ── AI CHAT ── */
-  #ai-fab{position:fixed;bottom:1.8rem;right:1.8rem;z-index:600;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--terra),var(--gold));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(181,90,53,.5);transition:transform .25s ease,box-shadow .25s ease}
+  #ai-fab{position:fixed;bottom:1.8rem;right:1.8rem;z-index:600;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--terra),var(--gold));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(181,90,53,.5);opacity:1;transition:transform .25s ease,box-shadow .25s ease,opacity .3s ease}
   #ai-fab:hover{transform:scale(1.08);box-shadow:0 12px 36px rgba(181,90,53,.6)}
   #ai-fab svg{width:22px;height:22px;fill:#fff}
-  #ai-fab .fab-label{position:absolute;bottom:-1.4rem;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.18em;color:var(--terra);white-space:nowrap;text-transform:uppercase}
+  #ai-fab .fab-label{position:absolute;bottom:-1.4rem;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.18em;color:var(--terra);white-space:nowrap;text-transform:uppercase}
   #ai-panel{position:fixed;top:0;right:0;bottom:0;z-index:599;width:400px;background:var(--bg);border-left:1px solid var(--bg3);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);box-shadow:-14px 0 55px rgba(27,42,64,.13)}
   #ai-panel.open{transform:translateX(0)}
   .ai-head{background:var(--navy);padding:1.3rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
@@ -954,7 +954,18 @@ function toggleChat() {
   const panel = document.getElementById("ai-panel");
   const fab = document.getElementById("ai-fab");
   const opened = panel.classList.toggle("open");
-  fab.style.display = opened ? "none" : "flex";
+
+  if (opened) {
+    // fade out then hide
+    fab.style.opacity = "0";
+    setTimeout(() => { fab.style.display = "none"; }, 300);
+  } else {
+    // show then fade in
+    fab.style.display = "flex";
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => { fab.style.opacity = "1"; });
+    });
+  }
   // show only once
   if (opened && !window.aiInitialized) {
     appendMsg(
