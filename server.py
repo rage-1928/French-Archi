@@ -4,7 +4,7 @@ import urllib.request
 import urllib.error
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL = "mistral"   # "phi" (fast), "mistral" (balanced), "llama3" (best quality)
+MODEL = "phi"   # "phi" (fast), "mistral" (balanced), "llama3" (best quality)
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -46,6 +46,7 @@ class Handler(BaseHTTPRequestHandler):
         prompt_parts.append(
             "Assistant: Give a clear, detailed answer in 4-6 sentences. "
             "Explain the key points thoroughly. Do not cut off mid-sentence."
+            "Do not give tasks or instructions, only direct answers. Avoid vague language. "
         )
 
         prompt = "\n".join(prompt_parts)
