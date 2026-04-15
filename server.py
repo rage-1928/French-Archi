@@ -6,6 +6,23 @@ import urllib.error
 OLLAMA_URL = "http://localhost:11434/api/generate"
 MODEL = "phi"   # "phi" (fast), "mistral" (balanced), "llama3" (best quality)
 
+# System instructions placed BEFORE the conversation, not inside the Assistant turn
+SYSTEM_PROMPT = (
+    "You are a direct, factual assistant. Rules you must follow without exception:\n"
+    "- Answer immediately with real facts. Never restate or summarise the question.\n"
+    "- Never ask clarifying questions or follow-up questions.\n"
+    "- Never list steps, sub-tasks, or say what you are about to do.\n"
+    "- Write in complete sentences. Never stop mid-sentence.\n"
+    "- Be specific and concise. One coherent paragraph is ideal.\n"
+    "- NEVER use hypothetical scenarios, invented examples, or 'imagine if' framings.\n"
+    "- NEVER say 'for example', 'suppose', 'consider a case where', 'let's say', or similar.\n"
+    "- NEVER invent people, companies, or situations to illustrate a point.\n"
+    "- If a real example is needed, use a documented real-world fact — otherwise skip it.\n"
+    "- NEVER describe or announce what your response will do. Never say things like "
+    "'This response provides...', 'I will now explain...', 'As required by the rules...', "
+    "or any similar meta-commentary about your own reply. Just answer.\n"
+)
+
 
 class Handler(BaseHTTPRequestHandler):
 
@@ -37,17 +54,16 @@ class Handler(BaseHTTPRequestHandler):
 
         messages = body.get("messages", [])
 
-        # Build prompt from last 6 messages for context
-        prompt_parts = []
+        # System prompt goes first — before any conversation turns
+        prompt_parts = [SYSTEM_PROMPT]
+
+        # Build conversation history from last 6 messages
         for m in messages[-6:]:
             role = "User" if m.get("role") == "user" else "Assistant"
             prompt_parts.append(f"{role}: {m.get('content', '')}")
 
-        prompt_parts.append(
-            "Assistant: Give a clear, detailed answer in 4-6 sentences. "
-            "Explain the key points thoroughly. Do not cut off mid-sentence."
-            "Do not give tasks or instructions, only direct answers. Avoid vague language. "
-        )
+        # End with a clean "Assistant:" cue — no instructions here
+        prompt_parts.append("Assistant:")
 
         prompt = "\n".join(prompt_parts)
 
@@ -59,11 +75,11 @@ class Handler(BaseHTTPRequestHandler):
                     "prompt": prompt,
                     "stream": True,
                     "options": {
-                        "num_predict": 600,       # Raised to allow detailed multi-sentence answers
+                        "num_predict": 800,       # Higher ceiling to avoid mid-sentence cutoff
                         "temperature": 0.7,
                         "top_p": 0.9,
                         "repeat_penalty": 1.2,
-                        "stop": ["\nUser:", "\nAssistant:", "```"]  # Added ``` to catch markdown artifacts
+                        "stop": ["\nUser:", "\nAssistant:"]  # Removed ``` — it was cutting responses short
                     }
                 }).encode(),
                 headers={"Content-Type": "application/json"}
@@ -86,12 +102,9 @@ class Handler(BaseHTTPRequestHandler):
                     token = chunk.get("response", "")
 
                     if token:
-                        # Write tokens directly — Ollama streams complete tokens,
-                        # no need to buffer by word boundaries
                         self.wfile.write(token.encode("utf-8"))
                         self.wfile.flush()
 
-                    # Break cleanly when Ollama signals it's done
                     if chunk.get("done"):
                         break
 
