@@ -4,9 +4,8 @@ import urllib.request
 import urllib.error
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL = "phi"   # "phi" (fast), "mistral" (balanced), "llama3" (best quality)
+MODEL = "mistral"   # "phi" (fast), "mistral" (balanced), "llama3" (best quality)
 
-# System instructions placed BEFORE the conversation, not inside the Assistant turn
 SYSTEM_PROMPT = (
     "You are a direct, factual assistant. Rules you must follow without exception:\n"
     "- Answer immediately with real facts. Never restate or summarise the question.\n"
@@ -28,7 +27,14 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
-            with open("index.html", "rb") as f:
+            # Map URL path to a local HTML file; default to index.html
+            path = self.path.split("?")[0]  # strip query strings
+            if path in ("/quiz.html", "/quiz"):
+                filename = "quiz.html"
+            else:
+                filename = "index.html"
+
+            with open(filename, "rb") as f:
                 data = f.read()
 
             self.send_response(200)
