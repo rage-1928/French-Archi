@@ -1339,6 +1339,148 @@
     }
 
     /* ── AI CHAT ── */
+    /* ── WAVING KING POPUP ── */
+    #king-popup {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 700;
+      display: flex;
+      align-items: flex-end;
+      gap: .9rem;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .42s cubic-bezier(.22, 1, .36, 1),
+        transform .42s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    #king-popup.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    #king-popup.hide {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    /* Avatar with wave */
+    .kp-avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .kp-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top center;
+      border: 3px solid var(--kp-accent, var(--terra));
+      display: block;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .25);
+    }
+
+    /* Waving hand badge */
+    .kp-wave {
+      position: absolute;
+      bottom: -4px;
+      right: -6px;
+      font-size: 1.3rem;
+      line-height: 1;
+      animation: handWave 1.4s ease-in-out infinite;
+      transform-origin: 70% 90%;
+    }
+
+    @keyframes handWave {
+
+      0%,
+      100% {
+        transform: rotate(0deg);
+      }
+
+      20% {
+        transform: rotate(22deg);
+      }
+
+      40% {
+        transform: rotate(-8deg);
+      }
+
+      60% {
+        transform: rotate(18deg);
+      }
+
+      80% {
+        transform: rotate(-5deg);
+      }
+    }
+
+    /* Subtle bob on the whole avatar */
+    .kp-avatar-wrap {
+      animation: kingBob 2.6s ease-in-out infinite;
+    }
+
+    @keyframes kingBob {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+
+    /* Speech bubble */
+    .kp-bubble {
+      background: var(--white);
+      border-radius: 12px 12px 12px 2px;
+      padding: .8rem 1rem .8rem 1rem;
+      box-shadow: 0 8px 32px rgba(27, 42, 64, .18);
+      max-width: 230px;
+      position: relative;
+      border-left: 3px solid var(--kp-accent, var(--terra));
+    }
+
+    .kp-bubble-name {
+      font-family: 'Cinzel', serif;
+      font-size: .52rem;
+      letter-spacing: .18em;
+      color: var(--kp-accent, var(--terra));
+      text-transform: uppercase;
+      margin-bottom: .35rem;
+    }
+
+    .kp-bubble-text {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: .88rem;
+      color: var(--navy);
+      line-height: 1.45;
+    }
+
+    .kp-close {
+      position: absolute;
+      top: .4rem;
+      right: .45rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: .8rem;
+      color: var(--stone);
+      line-height: 1;
+      padding: .15rem;
+      transition: color .15s;
+    }
+
+    .kp-close:hover {
+      color: var(--terra);
+    }
+
     #ai-fab {
       position: fixed;
       bottom: 1.8rem;
@@ -2394,6 +2536,21 @@
   </div>
 
   <!-- ══════════════════════════════════════ -->
+  <!--  WAVING KING POPUP                    -->
+  <!-- ══════════════════════════════════════ -->
+  <div id="king-popup">
+    <div class="kp-avatar-wrap">
+      <img class="kp-avatar" id="kp-img" src="" alt="">
+      <span class="kp-wave">👋</span>
+    </div>
+    <div class="kp-bubble">
+      <button class="kp-close" onclick="dismissKing()" aria-label="Close">&times;</button>
+      <div class="kp-bubble-name" id="kp-name"></div>
+      <div class="kp-bubble-text" id="kp-text"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
   <!--  AI FAB & PANEL                       -->
   <!-- ══════════════════════════════════════ -->
   <button id="ai-fab" onclick="toggleChat()" title="Ask about French Architecture">
@@ -2543,17 +2700,17 @@
 
     function closeModal() {
       const overlay = document.getElementById('modal-overlay');
-      const card    = document.getElementById('modal-card');
+      const card = document.getElementById('modal-card');
       // Remove .open — CSS transition back to closed-state transform animates the exit
       overlay.classList.remove('open');
       document.body.classList.remove('modal-active');
       document.body.style.overflow = '';
       // Clear any leftover inline overrides from previous versions
       setTimeout(() => {
-        card.style.transform  = '';
-        card.style.opacity    = '';
+        card.style.transform = '';
+        card.style.opacity = '';
         card.style.transition = '';
-        card.style.top  = '';
+        card.style.top = '';
         card.style.left = '';
       }, 500);
     }
@@ -2570,14 +2727,85 @@
     /* ══════════════════════════════════
        SCROLL ANIMATIONS
     ══════════════════════════════════ */
-    // Era block scroll reveals
+    /* ── Waving king popup ── */
+    const kingGreetings = {
+      gothic: { quote: '"Light is the first of all created things — come see it made divine."' },
+      renaissance: { quote: '"Italy gave me the vision; France gave it a soul."' },
+      baroque: { quote: '"I did not merely build Versailles — I declared it an empire of beauty."' },
+      haussmann: { quote: '"I gave Paris its boulevards. Every street is a stroke of my pen."' },
+      artnouveau: { quote: '"Even iron can bloom. Look closely — the city is alive."' },
+      modern: { quote: '"A house is a machine for living in. Welcome to the future."' },
+    };
+
+    let kingTimer = null;
+    function showKing(eraKey) {
+      const data = eraFigures[eraKey];
+      const greet = kingGreetings[eraKey];
+      if (!data || !greet) return;
+
+      const popup = document.getElementById('king-popup');
+      const img = document.getElementById('kp-img');
+      const name = document.getElementById('kp-name');
+      const text = document.getElementById('kp-text');
+
+      // Set content
+      img.src = data.image;
+      img.alt = data.name;
+      img.onerror = () => { img.src = data.imageFallback; img.onerror = null; };
+      name.textContent = data.name;
+      text.textContent = greet.quote;
+
+      // Set accent colour
+      popup.style.setProperty('--kp-accent', data.accent);
+
+      // Show
+      popup.classList.remove('hide');
+      popup.classList.add('show');
+
+      // Auto-dismiss after 5s
+      clearTimeout(kingTimer);
+      kingTimer = setTimeout(dismissKing, 5000);
+    }
+
+    function dismissKing() {
+      clearTimeout(kingTimer);
+      const popup = document.getElementById('king-popup');
+      popup.classList.add('hide');
+      setTimeout(() => popup.classList.remove('show', 'hide'), 450);
+    }
+
+    // Era block scroll reveals + waving king on enter/re-enter
     const eraBlocks = document.querySelectorAll('.era-block');
+    let lastKingEra = null;
+    let kingDebounce = null;
+
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
+        // Add .vis once for the CSS scroll-reveal animation
+        if (e.isIntersecting && !e.target.classList.contains('vis')) {
+          e.target.classList.add('vis');
+        }
+        // Show king when era is ≥35% in view (entering from either direction)
+        if (e.isIntersecting && e.intersectionRatio >= 0.35) {
+          const eraKey = e.target.dataset.era;
+          if (eraKey && eraKey !== lastKingEra) {
+            clearTimeout(kingDebounce);
+            kingDebounce = setTimeout(() => {
+              lastKingEra = eraKey;
+              showKing(eraKey);
+            }, 300);
+          }
+        }
+        // Dismiss only when era has fully left the viewport (0% visible)
+        if (!e.isIntersecting && e.target.dataset.era === lastKingEra) {
+          lastKingEra = null;
+          dismissKing();
+        }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: [0, 0.35] });
     eraBlocks.forEach(b => obs.observe(b));
+
+
 
     // Generic simple-reveal observer
     function makeRevealObs(selector, threshold = 0.15) {
