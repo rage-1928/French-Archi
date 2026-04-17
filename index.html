@@ -904,7 +904,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    © 2026 L'Architecture Française · Images via Unsplash · Made with care
+    © 2026 L'Architecture Française · · Made for lovers of design.
   </div>
 </footer>
 
@@ -1088,7 +1088,7 @@ async function sendMsg() {
 
   const container = document.getElementById("ai-msgs");
 
-  // ✅ SHOW TYPING DOTS
+  //  SHOW TYPING DOTS
   const typingDiv = document.createElement("div");
   typingDiv.className = "msg assistant";
   typingDiv.id = "typing";
@@ -1121,11 +1121,11 @@ async function sendMsg() {
 
     let fullText = "";
 
-    // ✅ REMOVE TYPING DOTS
+    //  REMOVE TYPING DOTS
     const typingEl = document.getElementById("typing");
     if (typingEl) typingEl.remove();
 
-    // ✅ CREATE NEW MESSAGE (FIXED BUG)
+    //  CREATE NEW MESSAGE (FIXED BUG)
     const msgDiv = document.createElement("div");
     msgDiv.className = "msg assistant";
 
@@ -1140,7 +1140,7 @@ async function sendMsg() {
 
     const streamEl = document.getElementById(id);
 
-    // ✅ STREAM RESPONSE
+    //  STREAM RESPONSE
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
@@ -1161,7 +1161,7 @@ async function sendMsg() {
     const typingEl = document.getElementById("typing");
     if (typingEl) typingEl.remove();
 
-    appendMsg("assistant", "⚠️ Backend error. Check Ollama/server.");
+    appendMsg("assistant", "Ollama ran out of memory.");
   }
 
   busy = false;
