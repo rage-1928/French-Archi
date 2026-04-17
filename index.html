@@ -6,20 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>L'Architecture Française</title>
   <link
-    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jost:wght@300;400;500;600&family=Cinzel:wght@400;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Serif+Display:ital@0;1&family=Jost:wght@300;400;500;600&family=Cinzel:wght@400;600&display=swap"
     rel="stylesheet">
   <style>
     :root {
-      --bg: #FAFAF7;
-      --bg2: #F3EDE0;
-      --bg3: #E2D9C8;
-      --navy: #1B2A40;
-      --terra: #B55A35;
-      --gold: #9A7A28;
-      --stone: #7A6E60;
-      --text: #2A2620;
-      --light: #C4B49A;
-      --white: #FFFFFF;
+      --bg: #F7F2E8;
+      /* warm parchment — Haussmann limestone */
+      --bg2: #EDE4D0;
+      /* aged paper */
+      --bg3: #D4C8AD;
+      /* stone */
+      --navy: #0D1B3E;
+      /* deep French royal navy */
+      --terra: #9B1B30;
+      /* bordeaux/crimson — French flag red */
+      --gold: #B8892A;
+      /* Versailles gold */
+      --stone: #6B5E50;
+      /* warm stone */
+      --text: #1A1208;
+      /* rich near-black */
+      --light: #BCA98A;
+      /* soft parchment light */
+      --white: #FDFAF4;
+      /* warm ivory white */
     }
 
     *,
@@ -99,8 +109,13 @@
       left: 0;
       right: 0;
       z-index: 200;
-      background: rgba(250, 250, 247, 0.96);
-      backdrop-filter: blur(10px);
+      /* Full tricolor background: bleu · blanc · rouge */
+      background: linear-gradient(to right,
+          rgb(0, 34, 255) 33.33%,
+          rgba(253, 250, 244, 0.97) 33.33%,
+          rgba(253, 250, 244, 0.97) 66.66%,
+          rgb(239, 65, 53) 66.66%);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--bg3);
       display: flex;
       align-items: center;
@@ -110,7 +125,7 @@
     }
 
     nav.scrolled {
-      box-shadow: 0 4px 24px rgba(27, 42, 64, .1);
+      box-shadow: 0 4px 24px rgba(13, 27, 62, .12);
     }
 
     .nav-logo {
@@ -423,39 +438,45 @@
 
     /* ── ERA THEMES ── */
     .era-block[data-era="gothic"] {
-      --era-accent: #3B5FA0;
-      --era-bg: #EFF3F9;
-      --era-tint: rgba(59, 95, 160, .07);
+      --era-accent: #1A3F8F;
+      /* cathedral blue — French Gothic */
+      --era-bg: #EEF1F9;
+      --era-tint: rgba(26, 63, 143, .07);
     }
 
     .era-block[data-era="renaissance"] {
-      --era-accent: #9A7A28;
-      --era-bg: #F7F3E8;
-      --era-tint: rgba(154, 122, 40, .07);
+      --era-accent: #9B6E14;
+      /* Chambord gold */
+      --era-bg: #F8F3E5;
+      --era-tint: rgba(155, 110, 20, .07);
     }
 
     .era-block[data-era="baroque"] {
-      --era-accent: #7B3564;
-      --era-bg: #F6EFF5;
-      --era-tint: rgba(123, 53, 100, .06);
+      --era-accent: #7A1F4C;
+      /* Versailles violet-crimson */
+      --era-bg: #F7EEF4;
+      --era-tint: rgba(122, 31, 76, .06);
     }
 
     .era-block[data-era="haussmann"] {
-      --era-accent: #B55A35;
-      --era-bg: #FBF3EE;
-      --era-tint: rgba(181, 90, 53, .07);
+      --era-accent: #9B1B30;
+      /* bordeaux — French crimson */
+      --era-bg: #FAF0F2;
+      --era-tint: rgba(155, 27, 48, .07);
     }
 
     .era-block[data-era="artnouveau"] {
-      --era-accent: #3D7A55;
+      --era-accent: #2E6B45;
+      /* Guimard green — Métro ironwork */
       --era-bg: #EEF6F1;
-      --era-tint: rgba(61, 122, 85, .06);
+      --era-tint: rgba(46, 107, 69, .06);
     }
 
     .era-block[data-era="modern"] {
-      --era-accent: #3A607A;
-      --era-bg: #EEF3F6;
-      --era-tint: rgba(58, 96, 122, .07);
+      --era-accent: #1E4F6B;
+      /* Le Corbusier steel blue */
+      --era-bg: #EBF2F6;
+      --era-tint: rgba(30, 79, 107, .07);
     }
 
     .era-info {
@@ -1339,20 +1360,53 @@
     }
 
     /* ── AI CHAT ── */
-    /* ── WAVING KING POPUP ── */
+    /* ── FULL-BODY WAVING KING CHARACTER ── */
     #king-popup {
       position: fixed;
-      bottom: 2rem;
-      left: 2rem;
+      bottom: 0;
       z-index: 700;
       display: flex;
+      flex-direction: row;
       align-items: flex-end;
-      gap: .9rem;
+      gap: 1.2rem;
       pointer-events: none;
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity .42s cubic-bezier(.22, 1, .36, 1),
-        transform .42s cubic-bezier(.22, 1, .36, 1);
+      transform: translateY(110%);
+      transition: opacity .55s cubic-bezier(.22, 1, .36, 1),
+        transform .55s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    /* Image is on LEFT → popup on RIGHT side
+       Layout: [character][bubble→] */
+    #king-popup.popup-right {
+      right: 2.5rem;
+      left: auto;
+      flex-direction: row;
+      /* character left, bubble right */
+    }
+
+    /* Image is on RIGHT → popup on LEFT side
+       Layout: [←bubble][character] — mirror */
+    #king-popup.popup-left {
+      left: 2.5rem;
+      right: auto;
+      flex-direction: row-reverse;
+      /* character right (edge), bubble left (inward) */
+    }
+
+    /* Mirror bubble tail + border when popup is on left side */
+    #king-popup.popup-left .kp-bubble {
+      border-right: none;
+      border-left: 3px solid var(--kp-accent, var(--terra));
+      border-radius: 14px 14px 2px 14px;
+    }
+
+    #king-popup.popup-left .kp-bubble::after {
+      left: auto;
+      right: 0;
+      border-left: 0;
+      border-right: 10px solid var(--white);
+      border-top: 10px solid var(--white);
     }
 
     #king-popup.show {
@@ -1363,92 +1417,41 @@
 
     #king-popup.hide {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(30px);
     }
 
-    /* Avatar with wave */
-    .kp-avatar-wrap {
-      position: relative;
-      flex-shrink: 0;
-    }
-
-    .kp-avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: top center;
-      border: 3px solid var(--kp-accent, var(--terra));
-      display: block;
-      box-shadow: 0 8px 28px rgba(0, 0, 0, .25);
-    }
-
-    /* Waving hand badge */
-    .kp-wave {
-      position: absolute;
-      bottom: -4px;
-      right: -6px;
-      font-size: 1.3rem;
-      line-height: 1;
-      animation: handWave 1.4s ease-in-out infinite;
-      transform-origin: 70% 90%;
-    }
-
-    @keyframes handWave {
-
-      0%,
-      100% {
-        transform: rotate(0deg);
-      }
-
-      20% {
-        transform: rotate(22deg);
-      }
-
-      40% {
-        transform: rotate(-8deg);
-      }
-
-      60% {
-        transform: rotate(18deg);
-      }
-
-      80% {
-        transform: rotate(-5deg);
-      }
-    }
-
-    /* Subtle bob on the whole avatar */
-    .kp-avatar-wrap {
-      animation: kingBob 2.6s ease-in-out infinite;
-    }
-
-    @keyframes kingBob {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-5px);
-      }
-    }
-
-    /* Speech bubble */
+    /* ---- Speech bubble ---- */
     .kp-bubble {
       background: var(--white);
-      border-radius: 12px 12px 12px 2px;
-      padding: .8rem 1rem .8rem 1rem;
-      box-shadow: 0 8px 32px rgba(27, 42, 64, .18);
-      max-width: 230px;
+      border-radius: 14px 14px 14px 2px;
+      /* tail is bottom-left now */
+      padding: .9rem 1.1rem;
+      box-shadow: 0 8px 36px rgba(13, 27, 62, .16);
+      max-width: 210px;
+      min-width: 160px;
       position: relative;
-      border-left: 3px solid var(--kp-accent, var(--terra));
+      border-right: 3px solid var(--kp-accent, var(--terra));
+      /* accent on right */
+      border-left: none;
+      margin-bottom: 3.5rem;
+    }
+
+    /* Tail pointing to character on the LEFT */
+    .kp-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      border: 10px solid transparent;
+      border-top: 10px solid var(--white);
+      border-left: 10px solid var(--white);
+      border-bottom: 0;
+      border-right: 0;
     }
 
     .kp-bubble-name {
       font-family: 'Cinzel', serif;
-      font-size: .52rem;
+      font-size: .5rem;
       letter-spacing: .18em;
       color: var(--kp-accent, var(--terra));
       text-transform: uppercase;
@@ -1458,27 +1461,72 @@
     .kp-bubble-text {
       font-family: 'DM Serif Display', serif;
       font-style: italic;
-      font-size: .88rem;
+      font-size: .85rem;
       color: var(--navy);
       line-height: 1.45;
     }
 
     .kp-close {
       position: absolute;
-      top: .4rem;
-      right: .45rem;
+      top: .35rem;
+      right: .4rem;
       background: none;
       border: none;
       cursor: pointer;
       font-size: .8rem;
       color: var(--stone);
       line-height: 1;
-      padding: .15rem;
+      padding: .1rem;
       transition: color .15s;
     }
 
     .kp-close:hover {
       color: var(--terra);
+    }
+
+    /* ---- SVG Paper Cutout Character ---- */
+    .kc-figure {
+      width: 100px;
+      height: auto;
+      flex-shrink: 0;
+      overflow: visible;
+      animation: kcBob 2.5s ease-in-out infinite;
+      filter: drop-shadow(0 6px 18px rgba(13, 27, 62, .18));
+    }
+
+    @keyframes kcBob {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    /* Era-accent fill applied to outfit layers */
+    .kc-outfit {
+      fill: var(--kp-accent, #9B1B30);
+    }
+
+    /* Waving arm pivot group — rotates around the shoulder (0,0) */
+    .kc-arm-wave {
+      transform-origin: 0 0;
+      animation: svgArmWave 1.1s ease-in-out infinite;
+    }
+
+    @keyframes svgArmWave {
+
+      0%,
+      100% {
+        transform: rotate(-22deg);
+      }
+
+      50% {
+        transform: rotate(-72deg);
+      }
     }
 
     #ai-fab {
@@ -1991,7 +2039,7 @@
 
   <!-- NAV -->
   <nav id="main-nav">
-    <div class="nav-logo">L'Architecture Française</div>
+    <div class="nav-logo" style="color:var(--white);">⚜ L'Architecture Française</div>
     <ul>
       <li><a href="#eras">Eras</a></li>
       <li><a href="#principles">Principles</a></li>
@@ -2539,10 +2587,80 @@
   <!--  WAVING KING POPUP                    -->
   <!-- ══════════════════════════════════════ -->
   <div id="king-popup">
-    <div class="kp-avatar-wrap">
-      <img class="kp-avatar" id="kp-img" src="" alt="">
-      <span class="kp-wave">👋</span>
-    </div>
+    <!-- SVG Paper Cutout Character comes FIRST (left side) -->
+    <svg class="kc-figure" viewBox="0 0 100 258" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <filter id="ps" x="-15%" y="-15%" width="140%" height="140%">
+          <feDropShadow dx="1.5" dy="2" stdDeviation="1.4" flood-opacity="0.22" />
+        </filter>
+      </defs>
+
+      <!-- ━━ ERA HEADWEAR (injected by JS per era) ━━ -->
+      <g id="kc-hat"></g>
+
+      <!-- ━━ HEAD (flat paper face) ━━ -->
+      <ellipse cx="50" cy="60" rx="26" ry="28" fill="#F5CBA7" filter="url(#ps)" />
+      <path d="M 36 50 Q 41 46 46 50" stroke="#3A2010" stroke-width="1.8" fill="none" stroke-linecap="round" />
+      <path d="M 54 50 Q 59 46 64 50" stroke="#3A2010" stroke-width="1.8" fill="none" stroke-linecap="round" />
+      <ellipse cx="41" cy="57" rx="4.5" ry="5" fill="#1A1208" />
+      <ellipse cx="40" cy="56" rx="1.5" ry="1.5" fill="rgba(255,255,255,0.55)" />
+      <ellipse cx="59" cy="57" rx="4.5" ry="5" fill="#1A1208" />
+      <ellipse cx="58" cy="56" rx="1.5" ry="1.5" fill="rgba(255,255,255,0.55)" />
+      <path d="M 40 70 Q 50 81 60 70" stroke="#3A2010" stroke-width="2.2" fill="none" stroke-linecap="round" />
+      <ellipse cx="34" cy="68" rx="5" ry="3.5" fill="rgba(230,130,100,0.28)" />
+      <ellipse cx="66" cy="68" rx="5" ry="3.5" fill="rgba(230,130,100,0.28)" />
+      <!-- Era face accessories (e.g. Le Corbusier glasses) -->
+      <g id="kc-face-acc"></g>
+
+      <!-- ━━ NECK ━━ -->
+      <rect x="43" y="86" width="14" height="10" fill="#F5CBA7" />
+
+      <!-- ━━ TORSO (paper jacket) ━━ -->
+      <rect x="27" y="94" width="46" height="68" rx="4" class="kc-outfit" filter="url(#ps)" />
+      <polygon points="50,96 42,116 50,112" fill="rgba(255,255,255,0.22)" />
+      <polygon points="50,96 58,116 50,112" fill="rgba(255,255,255,0.15)" />
+      <line x1="50" y1="116" x2="50" y2="158" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"
+        stroke-dasharray="3,4" />
+
+      <!-- ━━ LEFT ARM (static) ━━ -->
+      <g transform="translate(27,103)">
+        <g transform="rotate(20)">
+          <rect x="-28" y="-6" width="30" height="12" rx="6" class="kc-outfit" filter="url(#ps)" />
+          <ellipse cx="-29" cy="0" rx="8" ry="7" fill="#F5CBA7" filter="url(#ps)" />
+        </g>
+      </g>
+
+      <!-- ━━ RIGHT ARM (waving) ━━ -->
+      <g transform="translate(73,103)">
+        <g class="kc-arm-wave">
+          <rect x="0" y="-6" width="30" height="12" rx="6" class="kc-outfit" filter="url(#ps)" />
+          <g transform="translate(30,0)">
+            <ellipse cx="0" cy="-1" rx="8" ry="7" fill="#F5CBA7" filter="url(#ps)" />
+            <rect x="-11" y="-13" width="5" height="12" rx="2.5" fill="#F5CBA7" />
+            <rect x="-5.5" y="-16" width="5" height="14" rx="2.5" fill="#F5CBA7" />
+            <rect x="0.5" y="-15" width="5" height="13" rx="2.5" fill="#F5CBA7" />
+            <rect x="6.5" y="-12" width="4.5" height="10" rx="2.2" fill="#F5CBA7" />
+            <rect x="5" y="2" width="9" height="4.5" rx="2.2" fill="#F5CBA7" transform="rotate(-30 5 4)" />
+          </g>
+        </g>
+      </g>
+
+      <!-- ━━ BELT ━━ -->
+      <rect x="27" y="158" width="46" height="6" rx="1" fill="rgba(0,0,0,0.3)" />
+
+      <!-- ━━ LEGS ━━ -->
+      <rect x="29" y="163" width="19" height="60" rx="5" fill="#2C3550" filter="url(#ps)" />
+      <rect x="52" y="163" width="19" height="60" rx="5" fill="#2C3550" filter="url(#ps)" />
+      <line x1="38" y1="175" x2="38" y2="215" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+      <line x1="61" y1="175" x2="61" y2="215" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+
+      <!-- ━━ SHOES ━━ -->
+      <ellipse cx="37" cy="225" rx="16" ry="8" fill="#1A1208" filter="url(#ps)" />
+      <ellipse cx="62" cy="225" rx="16" ry="8" fill="#1A1208" filter="url(#ps)" />
+      <ellipse cx="32" cy="222" rx="5" ry="2.5" fill="rgba(255,255,255,0.12)" />
+      <ellipse cx="57" cy="222" rx="5" ry="2.5" fill="rgba(255,255,255,0.12)" />
+    </svg>
+    <!-- Speech bubble comes SECOND (right side) -->
     <div class="kp-bubble">
       <button class="kp-close" onclick="dismissKing()" aria-label="Close">&times;</button>
       <div class="kp-bubble-name" id="kp-name"></div>
@@ -2737,26 +2855,72 @@
       modern: { quote: '"A house is a machine for living in. Welcome to the future."' },
     };
 
+    /* ── Era-specific hat & accessory SVG strings ── */
+    const eraHats = {
+      gothic:
+        `<path d="M35,36 Q35,5 50,2 Q65,5 65,36 Z" fill="#FDFAF4" stroke="#B8892A" stroke-width="2"/>
+         <rect x="32" y="33" width="36" height="7" rx="1" fill="#B8892A"/>
+         <line x1="50" y1="9" x2="50" y2="28" stroke="#B8892A" stroke-width="1.8"/>
+         <line x1="40" y1="19" x2="60" y2="19" stroke="#B8892A" stroke-width="1.8"/>`,
+      renaissance:
+        `<ellipse cx="50" cy="27" rx="30" ry="9" class="kc-outfit"/>
+         <ellipse cx="50" cy="23" rx="22" ry="7" fill="#9B6E14"/>
+         <path d="M76,25 Q90,6 80,0 Q88,12 76,20 Q84,4 72,6" stroke="#8B4513" stroke-width="1.8" fill="none" stroke-linecap="round"/>`,
+      baroque:
+        `<ellipse cx="50" cy="42" rx="34" ry="17" fill="#D9D0BE" filter="url(#ps)"/>
+         <path d="M18,44 Q10,58 16,68 Q11,55 20,48" fill="#D9D0BE"/>
+         <path d="M82,44 Q90,58 84,68 Q89,55 80,48" fill="#D9D0BE"/>
+         <ellipse cx="50" cy="25" rx="36" ry="7" fill="#1A1208"/>
+         <rect x="30" y="10" width="40" height="17" rx="2" fill="#1A1208"/>
+         <path d="M66,18 Q80,-4 70,-10 Q78,4 66,14 Q76,-2 62,4" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" fill="none" stroke-linecap="round"/>`,
+      haussmann:
+        `<rect x="35" y="5" width="30" height="28" rx="3" fill="#1A1208" filter="url(#ps)"/>
+         <ellipse cx="50" cy="33" rx="25" ry="6.5" fill="#1A1208"/>
+         <rect x="35" y="25" width="30" height="5" fill="#2C3550"/>
+         <path d="M37,8 Q43,5 48,9" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>`,
+      artnouveau:
+        `<path d="M28,32 Q26,13 50,9 Q74,13 72,32" fill="#1A1208" filter="url(#ps)"/>
+         <ellipse cx="50" cy="32" rx="27" ry="7" fill="#1A1208"/>
+         <path d="M28,29 Q50,34 72,29" stroke="#2E6B45" stroke-width="4" fill="none" stroke-linecap="round"/>`,
+      modern:
+        `<path d="M24,38 Q50,30 76,38" stroke="#3A2010" stroke-width="3" fill="none" stroke-linecap="round"/>`,
+    };
+
+    const eraFaceAccs = {
+      modern:
+        `<circle cx="40" cy="57" r="9" fill="rgba(200,220,255,0.18)" stroke="#1A1208" stroke-width="2.2"/>
+         <circle cx="60" cy="57" r="9" fill="rgba(200,220,255,0.18)" stroke="#1A1208" stroke-width="2.2"/>
+         <line x1="49" y1="57" x2="51" y2="57" stroke="#1A1208" stroke-width="2"/>
+         <line x1="27" y1="55" x2="31" y2="55" stroke="#1A1208" stroke-width="1.8"/>
+         <line x1="69" y1="55" x2="73" y2="55" stroke="#1A1208" stroke-width="1.8"/>`,
+    };
+
     let kingTimer = null;
-    function showKing(eraKey) {
+    function showKing(eraKey, side) {
       const data = eraFigures[eraKey];
       const greet = kingGreetings[eraKey];
       if (!data || !greet) return;
 
       const popup = document.getElementById('king-popup');
-      const img = document.getElementById('kp-img');
       const name = document.getElementById('kp-name');
       const text = document.getElementById('kp-text');
 
-      // Set content
-      img.src = data.image;
-      img.alt = data.name;
-      img.onerror = () => { img.src = data.imageFallback; img.onerror = null; };
+      // Position on the correct side (opposite to era image)
+      popup.classList.remove('popup-left', 'popup-right');
+      popup.classList.add(side === 'left' ? 'popup-left' : 'popup-right');
+
+      // Set bubble content
       name.textContent = data.name;
       text.textContent = greet.quote;
 
-      // Set accent colour
+      // Set era accent colour on character outfit + bubble
       popup.style.setProperty('--kp-accent', data.accent);
+
+      // Inject era-specific headwear into the SVG
+      const hatEl = document.getElementById('kc-hat');
+      if (hatEl) hatEl.innerHTML = eraHats[eraKey] || '';
+      const faceEl = document.getElementById('kc-face-acc');
+      if (faceEl) faceEl.innerHTML = eraFaceAccs[eraKey] || '';
 
       // Show
       popup.classList.remove('hide');
@@ -2790,9 +2954,14 @@
           const eraKey = e.target.dataset.era;
           if (eraKey && eraKey !== lastKingEra) {
             clearTimeout(kingDebounce);
+            // Determine which side the era IMAGE is on.
+            // Odd blocks (1-indexed): image is LEFT  → popup goes RIGHT
+            // Even blocks           : image is RIGHT → popup goes LEFT
+            const blockIndex = Array.from(eraBlocks).indexOf(e.target) + 1;
+            const side = (blockIndex % 2 === 0) ? 'left' : 'right';
             kingDebounce = setTimeout(() => {
               lastKingEra = eraKey;
-              showKing(eraKey);
+              showKing(eraKey, side);
             }, 300);
           }
         }
