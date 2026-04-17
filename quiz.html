@@ -20,6 +20,31 @@
   }
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior: smooth; }
+
+  /* ── PAGE TRANSITION CURTAIN ── */
+  #page-curtain {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--navy);
+    transform-origin: top;
+    transform: scaleY(1);
+    pointer-events: none;
+  }
+  body.page-ready #page-curtain {
+    animation: curtainUp .6s cubic-bezier(.77,0,.18,1) .05s forwards;
+  }
+  body.page-leaving #page-curtain {
+    animation: curtainDown .42s cubic-bezier(.77,0,.18,1) forwards;
+    pointer-events: all;
+  }
+  @keyframes curtainUp {
+    from { transform: scaleY(1); transform-origin: top; }
+    to   { transform: scaleY(0); transform-origin: top; }
+  }
+  @keyframes curtainDown {
+    from { transform: scaleY(0); transform-origin: bottom; }
+    to   { transform: scaleY(1); transform-origin: bottom; }
+  }
+
   body {
     background: var(--navy);
     color: var(--text);
@@ -120,11 +145,17 @@
     padding: 3rem 3.5rem 6rem;
     background: var(--navy);
     min-height: calc(100vh - 58px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   /* ── QUESTION CARD ── */
   .quiz-card {
     max-width: 820px;
+    width: 100%;
+    margin: 0 auto;
     opacity: 0; transform: translateY(18px);
     transition: opacity .45s ease, transform .45s ease;
   }
@@ -153,9 +184,13 @@
     padding: 1.1rem 1.4rem;
     font-family: 'Jost', sans-serif; font-size: .87rem;
     cursor: pointer; text-align: left;
-    transition: background .2s, border-color .2s, color .2s, transform .15s;
+    transition: background .2s, border-color .2s, color .2s, transform .15s, opacity .35s ease, box-shadow .2s;
     display: flex; align-items: flex-start; gap: 1rem;
     line-height: 1.5;
+    opacity: 0; transform: translateX(-10px);
+  }
+  .quiz-opt.opt-visible {
+    opacity: 1; transform: translateX(0);
   }
   .quiz-opt:hover:not(:disabled) {
     background: rgba(181,90,53,.16);
@@ -226,9 +261,69 @@
   .quiz-next.show { display: inline-block; animation: fadeUp .3s .08s both; }
   .quiz-next:hover { background: var(--gold); transform: translateY(-2px); box-shadow: 0 10px 28px rgba(154,122,40,.35); }
 
+  /* ── START SCREEN ── */
+  .quiz-start {
+    max-width: 620px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    animation: fadeUp .6s .15s both;
+  }
+  .quiz-start-icon {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--terra), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 2rem;
+    box-shadow: 0 12px 40px rgba(181,90,53,.35);
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem; color: #fff; line-height: 1;
+  }
+  .quiz-start h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    color: #fff; line-height: 1.1; margin-bottom: .9rem;
+  }
+  .quiz-start h2 em { font-style: italic; color: var(--terra); }
+  .quiz-start-sub {
+    font-size: .95rem; color: rgba(255,255,255,.42);
+    line-height: 1.8; max-width: 420px; margin: 0 auto 2.8rem;
+  }
+  .quiz-start-stats {
+    display: flex; justify-content: center; gap: 0;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.03);
+    max-width: 360px; margin: 0 auto 2.8rem;
+  }
+  .qs-item { flex: 1; padding: 1.2rem 1rem; }
+  .qs-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.7rem; color: #fff; line-height: 1;
+  }
+  .qs-label {
+    font-family: 'Cinzel', serif; font-size: .48rem;
+    letter-spacing: .22em; color: rgba(255,255,255,.28);
+    text-transform: uppercase; margin-top: .3rem;
+  }
+  .qs-div { width: 1px; background: rgba(255,255,255,.08); flex-shrink: 0; }
+  .quiz-start-btn {
+    display: inline-block; cursor: pointer; border: none;
+    background: linear-gradient(135deg, var(--terra), var(--gold));
+    color: #fff; padding: 1rem 3rem;
+    font-family: 'Cinzel', serif; font-size: .68rem;
+    letter-spacing: .28em; text-transform: uppercase;
+    transition: transform .2s ease, box-shadow .2s ease;
+    box-shadow: 0 8px 28px rgba(181,90,53,.4);
+  }
+  .quiz-start-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 38px rgba(181,90,53,.55);
+  }
+
   /* ── RESULTS ── */
   .quiz-results {
     max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
     text-align: center;
     padding: 3rem 2rem 5rem;
     display: none;
@@ -317,13 +412,16 @@
     nav { padding: 1rem 1.5rem; }
     .quiz-hero { padding: 4rem 1.5rem 3rem; }
     .quiz-progress-wrap { padding: 1.5rem 1.5rem 0; }
-    .quiz-body { padding: 2.5rem 1.5rem 5rem; }
+    .quiz-body { padding: 2.5rem 1.5rem 5rem; align-items: center; }
     .quiz-options { grid-template-columns: 1fr; }
     .quiz-hero-deco { display: none; }
   }
 </style>
 </head>
 <body>
+
+<!-- PAGE TRANSITION CURTAIN -->
+<div id="page-curtain"></div>
 
 <!-- NAV -->
 <nav>
@@ -343,7 +441,7 @@
 </div>
 
 <!-- PROGRESS -->
-<div class="quiz-progress-wrap">
+<div class="quiz-progress-wrap" id="qProgressWrap" style="display:none">
   <div class="quiz-progress-bar">
     <div class="quiz-progress-fill" id="qProgressFill" style="width:0%"></div>
   </div>
@@ -353,8 +451,32 @@
 <!-- BODY -->
 <div class="quiz-body">
 
+  <!-- START SCREEN -->
+  <div class="quiz-start" id="quizStart">
+    <div class="quiz-start-icon">?</div>
+    <h2>Test Your<br><em>Architectural Knowledge</em></h2>
+    <p class="quiz-start-sub">Ten questions spanning a thousand years — from Gothic flying buttresses to the Grande Arche de La Défense.</p>
+    <div class="quiz-start-stats">
+      <div class="qs-item">
+        <div class="qs-num">10</div>
+        <div class="qs-label">Questions</div>
+      </div>
+      <div class="qs-div"></div>
+      <div class="qs-item">
+        <div class="qs-num">6</div>
+        <div class="qs-label">Eras</div>
+      </div>
+      <div class="qs-div"></div>
+      <div class="qs-item">
+        <div class="qs-num">~5</div>
+        <div class="qs-label">Minutes</div>
+      </div>
+    </div>
+    <button class="quiz-start-btn" onclick="startQuiz()">Begin the Quiz &nbsp;→</button>
+  </div>
+
   <!-- QUESTION CARD -->
-  <div class="quiz-card" id="quizCard">
+  <div class="quiz-card" id="quizCard" style="display:none">
     <div class="quiz-q-num" id="qNum">Question 01</div>
     <div class="quiz-question" id="qText"></div>
     <div class="quiz-options" id="qOptions"></div>
@@ -505,6 +627,8 @@ function renderQuestion() {
       btn.innerHTML = '<span class="opt-letter">' + letters[i] + '</span><span>' + opt + '</span>';
       btn.onclick = () => selectAnswer(i);
       optsEl.appendChild(btn);
+      // Stagger the entry animation
+      setTimeout(() => btn.classList.add('opt-visible'), 80 + i * 70);
     });
 
     document.getElementById('qFeedback').className = 'quiz-feedback';
@@ -579,14 +703,56 @@ function showResults() {
 
 function restartQuiz() {
   current = 0; score = 0; answered = false;
+  // Hide results and question, show start screen
   document.getElementById('quizResults').classList.remove('show');
-  const card = document.getElementById('quizCard');
-  card.style.display = 'block';
-  renderQuestion();
+  document.getElementById('quizCard').style.display = 'none';
+  document.getElementById('qProgressWrap').style.display = 'none';
+  document.getElementById('qProgressFill').style.width = '0%';
+  const start = document.getElementById('quizStart');
+  start.style.display = 'block';
+  start.style.animation = 'none';
+  requestAnimationFrame(() => { start.style.animation = ''; });
+}
+
+function startQuiz() {
+  const start = document.getElementById('quizStart');
+  // Fade out start screen
+  start.style.transition = 'opacity .35s ease, transform .35s ease';
+  start.style.opacity = '0';
+  start.style.transform = 'translateY(-12px)';
+  setTimeout(() => {
+    start.style.display = 'none';
+    document.getElementById('qProgressWrap').style.display = 'flex';
+    const card = document.getElementById('quizCard');
+    card.style.display = 'block';
+    renderQuestion();
+  }, 360);
 }
 
 // Boot
-window.addEventListener('DOMContentLoaded', renderQuestion);
+window.addEventListener('DOMContentLoaded', () => {
+  // Don't auto-render — wait for startQuiz() click
+
+  // Page entry curtain — double rAF ensures browser paints curtain
+  // at scaleY(1) before the lift animation begins
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      document.body.classList.add('page-ready');
+    });
+  });
+
+  // Page-exit curtain on outgoing links
+  document.querySelectorAll('a[href]').forEach(link => {
+    const href = link.getAttribute('href');
+    if (href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto')) {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.body.classList.add('page-leaving');
+        setTimeout(() => { window.location.href = href; }, 440);
+      });
+    }
+  });
+});
 </script>
 
 </body>
