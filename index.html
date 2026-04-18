@@ -2958,7 +2958,9 @@
             // Odd blocks (1-indexed): image is LEFT  → popup goes RIGHT
             // Even blocks           : image is RIGHT → popup goes LEFT
             const blockIndex = Array.from(eraBlocks).indexOf(e.target) + 1;
-            const side = (blockIndex % 2 === 0) ? 'left' : 'right';
+            // Odd blocks: image is LEFT  → popup on LEFT (image side)
+            // Even blocks: image is RIGHT → popup on RIGHT (image side)
+            const side = (blockIndex % 2 === 0) ? 'right' : 'left';
             kingDebounce = setTimeout(() => {
               lastKingEra = eraKey;
               showKing(eraKey, side);
