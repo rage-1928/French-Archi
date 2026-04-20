@@ -1385,28 +1385,12 @@
       /* character left, bubble right */
     }
 
-    /* Image is on RIGHT → popup on LEFT side
-       Layout: [←bubble][character] — mirror */
+    /* Text is on LEFT → popup anchored to LEFT side
+       King always on left, bubble always on right — same order as popup-right */
     #king-popup.popup-left {
       left: 2.5rem;
       right: auto;
-      flex-direction: row-reverse;
-      /* character right (edge), bubble left (inward) */
-    }
-
-    /* Mirror bubble tail + border when popup is on left side */
-    #king-popup.popup-left .kp-bubble {
-      border-right: none;
-      border-left: 3px solid var(--kp-accent, var(--terra));
-      border-radius: 14px 14px 2px 14px;
-    }
-
-    #king-popup.popup-left .kp-bubble::after {
-      left: auto;
-      right: 0;
-      border-left: 0;
-      border-right: 10px solid var(--white);
-      border-top: 10px solid var(--white);
+      flex-direction: row;
     }
 
     #king-popup.show {
@@ -2184,7 +2168,7 @@
     <div class="era-block" data-era="baroque">
       <div class="era-img">
         <img
-          src="https://imgs.search.brave.com/GBRUTXYSzCdYTC79N0MvRwp5giktz47tcuNMMEvIGrc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9mYWNh/ZGUtdmVyc2FpbGxl/cy1wYWxhY2Utb3V0/c2lkZS1wYXJpcy1m/cmFuY2UtMzk4OTk4/OTA1LmpwZw?auto=format&fit=crop&w=700&q=55"
+          src="https://plus.unsplash.com/premium_photo-1661962571049-792ae9be2d79?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&w=700&q=55"
           alt="Palace of Versailles" onerror="this.parentElement.style.background='#c0b4cc'">
         <div class="era-img-cap"><span>Palace of Versailles · Yvelines</span></div>
       </div>
@@ -2306,9 +2290,10 @@
     <!-- MODERN -->
     <div class="era-block" data-era="modern">
       <div class="era-img">
-        <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=900&q=85"
+        <img
+          src="https://imgs.search.brave.com/KgQyt001iFCbTvGTNEvQMi2Bl47hKM98soXaz2_znnc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zbWFy/dGhpc3Rvcnkub3Jn/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDIy/LzAxLzYzMTAwOTA3/ODBfNWU0OGUwMWZh/M19rLTg3MHg1Nzgu/anBn?auto=format&fit=crop&w=900&q=85"
           alt="Eiffel Tower Paris" onerror="this.parentElement.style.background='#a8b8c4'">
-        <div class="era-img-cap"><span>Tour Eiffel · Champ de Mars, Paris</span></div>
+        <div class="era-img-cap"><span>Villa Savoye · Poissy</span></div>
       </div>
       <div class="era-info">
         <div class="era-num">VI</div>
@@ -2954,13 +2939,10 @@
           const eraKey = e.target.dataset.era;
           if (eraKey && eraKey !== lastKingEra) {
             clearTimeout(kingDebounce);
-            // Determine which side the era IMAGE is on.
-            // Odd blocks (1-indexed): image is LEFT  → popup goes RIGHT
-            // Even blocks           : image is RIGHT → popup goes LEFT
+            // Odd blocks  (1,3,5 – Gothic, Baroque, Art Nouveau): image LEFT, text RIGHT → popup RIGHT
+            // Even blocks (2,4,6 – Renaissance, Haussmann, Modern): image RIGHT, text LEFT → popup LEFT
             const blockIndex = Array.from(eraBlocks).indexOf(e.target) + 1;
-            // Odd blocks: image is LEFT  → popup on LEFT (image side)
-            // Even blocks: image is RIGHT → popup on RIGHT (image side)
-            const side = (blockIndex % 2 === 0) ? 'right' : 'left';
+            const side = (blockIndex % 2 === 1) ? 'right' : 'left';
             kingDebounce = setTimeout(() => {
               lastKingEra = eraKey;
               showKing(eraKey, side);
