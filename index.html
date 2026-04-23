@@ -2037,9 +2037,16 @@
         border-color .3s, box-shadow .3s, background .3s;
     }
 
+    .vis .era-voice-box,
+    .vis>.era-voice-box,
+    .hero-content .era-voice-box,
     .era-block.vis .era-voice-box {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    .hero-content .era-voice-box {
+      animation: fadeUp .8s .45s both;
     }
 
     .era-voice-box:hover {
@@ -2213,6 +2220,23 @@
     <div class="hero-content">
       <p class="hero-eyebrow">A visual journey · Mille ans d'architecture</p>
       <h1>French<br><em>Architecture</em></h1>
+      <div class="era-voice-box" onclick="toggleEraAudio(this)" role="button" tabindex="0"
+        aria-label="Play audio narration for intro" style="margin: 1.8rem 0 1.5rem 0; max-width: 280px;"
+        onkeydown="if(event.key==='Enter'||event.key===' ')toggleEraAudio(this)">
+        <audio src="audio/intro.mp3" preload="none"></audio>
+        <div class="evb-icon-wrap">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+          </svg>
+        </div>
+        <div class="evb-text" style="text-align: left;">
+          <div class="evb-label">Audio Narration</div>
+          <div class="evb-title">Introduction</div>
+        </div>
+        <div class="evb-wave">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
       <p class="hero-sub">From soaring Gothic cathedrals to bold modernist icons — a nation that built its identity in
         stone, glass, and iron across a thousand years.</p>
       <div class="hero-stats">
@@ -2292,7 +2316,7 @@
         <div class="era-voice-box" onclick="toggleEraAudio(this)" role="button" tabindex="0"
           aria-label="Play audio narration for Gothic era"
           onkeydown="if(event.key==='Enter'||event.key===' ')toggleEraAudio(this)">
-          <audio src="audio/gothic.mp3" preload="none"></audio>
+          <audio src="audio/person2.mp3" preload="none"></audio>
           <div class="evb-icon-wrap">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
@@ -2348,23 +2372,7 @@
           </div>
           <div class="era-figure-arrow">↗</div>
         </div>
-        <div class="era-voice-box" onclick="toggleEraAudio(this)" role="button" tabindex="0"
-          aria-label="Play audio narration for Renaissance era"
-          onkeydown="if(event.key==='Enter'||event.key===' ')toggleEraAudio(this)">
-          <audio src="audio/renaissance.mp3" preload="none"></audio>
-          <div class="evb-icon-wrap">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
-            </svg>
-          </div>
-          <div class="evb-text">
-            <div class="evb-label">Audio Narration</div>
-            <div class="evb-title">Renaissance Châteaux</div>
-          </div>
-          <div class="evb-wave">
-            <span></span><span></span><span></span><span></span>
-          </div>
-        </div>
+
       </div>
     </div>
 
@@ -2409,7 +2417,7 @@
         <div class="era-voice-box" onclick="toggleEraAudio(this)" role="button" tabindex="0"
           aria-label="Play audio narration for Baroque era"
           onkeydown="if(event.key==='Enter'||event.key===' ')toggleEraAudio(this)">
-          <audio src="audio/baroque.mp3" preload="none"></audio>
+          <audio src="audio/person3.mp3" preload="none"></audio>
           <div class="evb-icon-wrap">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
@@ -2465,23 +2473,7 @@
           </div>
           <div class="era-figure-arrow">↗</div>
         </div>
-        <div class="era-voice-box" onclick="toggleEraAudio(this)" role="button" tabindex="0"
-          aria-label="Play audio narration for Haussmann era"
-          onkeydown="if(event.key==='Enter'||event.key===' ')toggleEraAudio(this)">
-          <audio src="audio/haussmann.mp3" preload="none"></audio>
-          <div class="evb-icon-wrap">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
-            </svg>
-          </div>
-          <div class="evb-text">
-            <div class="evb-label">Audio Narration</div>
-            <div class="evb-title">Haussmann's Paris</div>
-          </div>
-          <div class="evb-wave">
-            <span></span><span></span><span></span><span></span>
-          </div>
-        </div>
+
       </div>
     </div>
 
@@ -2525,7 +2517,7 @@
         <div class="era-voice-box" onclick="toggleEraAudio(this)" role="button" tabindex="0"
           aria-label="Play audio narration for Art Nouveau era"
           onkeydown="if(event.key==='Enter'||event.key===' ')toggleEraAudio(this)">
-          <audio src="audio/artnouveau.mp3" preload="none"></audio>
+          <audio src="audio/person4.mp3" preload="none"></audio>
           <div class="evb-icon-wrap">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
@@ -2582,23 +2574,7 @@
           </div>
           <div class="era-figure-arrow">↗</div>
         </div>
-        <div class="era-voice-box" onclick="toggleEraAudio(this)" role="button" tabindex="0"
-          aria-label="Play audio narration for Modern era"
-          onkeydown="if(event.key==='Enter'||event.key===' ')toggleEraAudio(this)">
-          <audio src="audio/modern.mp3" preload="none"></audio>
-          <div class="evb-icon-wrap">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
-            </svg>
-          </div>
-          <div class="evb-text">
-            <div class="evb-label">Audio Narration</div>
-            <div class="evb-title">Modern & Contemporary</div>
-          </div>
-          <div class="evb-wave">
-            <span></span><span></span><span></span><span></span>
-          </div>
-        </div>
+
       </div>
     </div>
   </section>
@@ -2615,6 +2591,23 @@
     <div class="section-hdr">
       <div class="sec-label">Design philosophy</div>
       <h2>Core Principles of <em>French Design</em></h2>
+      <div class="era-voice-box" onclick="toggleEraAudio(this)" role="button" tabindex="0"
+        aria-label="Play audio narration for principles" style="margin: 1.5rem auto 0; max-width: 280px;"
+        onkeydown="if(event.key==='Enter'||event.key===' ')toggleEraAudio(this)">
+        <audio src="audio/person5.mp3" preload="none"></audio>
+        <div class="evb-icon-wrap">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+          </svg>
+        </div>
+        <div class="evb-text" style="text-align: left;">
+          <div class="evb-label">Audio Narration</div>
+          <div class="evb-title">Core Principles</div>
+        </div>
+        <div class="evb-wave">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
     </div>
     <div class="principles-grid">
       <div class="p-card">
