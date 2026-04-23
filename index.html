@@ -2013,6 +2013,176 @@
         padding: 1.5rem 1.3rem;
       }
     }
+
+    /* ── ERA VOICE BOX ── */
+    .era-voice-box {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.85rem;
+      cursor: pointer;
+      background: rgba(255, 255, 255, .45);
+      border: 1px solid var(--bg3);
+      padding: .75rem 1rem .75rem .85rem;
+      position: relative;
+      overflow: hidden;
+      align-self: flex-start;
+      max-width: 280px;
+      transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease, background .3s ease;
+      backdrop-filter: blur(4px);
+      user-select: none;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .5s ease .65s, transform .5s ease .65s,
+        border-color .3s, box-shadow .3s, background .3s;
+    }
+
+    .era-block.vis .era-voice-box {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .era-voice-box:hover {
+      border-color: var(--era-accent, var(--terra));
+      box-shadow: 0 8px 28px color-mix(in srgb, var(--era-accent, var(--terra)) 20%, transparent);
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, .82);
+    }
+
+    .era-voice-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .4), transparent);
+      transition: left .55s ease;
+    }
+
+    .era-voice-box:hover::before {
+      left: 160%;
+    }
+
+    .evb-icon-wrap {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--era-accent, var(--terra));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background .3s;
+      position: relative;
+    }
+
+    .evb-icon-wrap svg {
+      width: 16px;
+      height: 16px;
+      fill: #fff;
+      transition: opacity .2s;
+    }
+
+    /* Pulsing ring when playing */
+    .era-voice-box.playing .evb-icon-wrap::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid var(--era-accent, var(--terra));
+      animation: vbPulse 1.2s ease-out infinite;
+    }
+
+    @keyframes vbPulse {
+      0% {
+        transform: scale(1);
+        opacity: .7;
+      }
+
+      100% {
+        transform: scale(1.55);
+        opacity: 0;
+      }
+    }
+
+    .evb-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .evb-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      color: var(--era-accent, var(--terra));
+      text-transform: uppercase;
+      margin-bottom: .18rem;
+    }
+
+    .evb-title {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--navy);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Waveform bars */
+    .evb-wave {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex-shrink: 0;
+      height: 20px;
+    }
+
+    .evb-wave span {
+      display: block;
+      width: 3px;
+      border-radius: 2px;
+      background: var(--era-accent, var(--terra));
+      opacity: 0.35;
+      height: 6px;
+      transition: height .2s;
+    }
+
+    .era-voice-box.playing .evb-wave span {
+      opacity: 0.8;
+      animation: waveBar .9s ease-in-out infinite alternate;
+    }
+
+    .era-voice-box.playing .evb-wave span:nth-child(1) {
+      animation-delay: 0s;
+      --h: 12px;
+    }
+
+    .era-voice-box.playing .evb-wave span:nth-child(2) {
+      animation-delay: .12s;
+      --h: 18px;
+    }
+
+    .era-voice-box.playing .evb-wave span:nth-child(3) {
+      animation-delay: .24s;
+      --h: 10px;
+    }
+
+    .era-voice-box.playing .evb-wave span:nth-child(4) {
+      animation-delay: .08s;
+      --h: 16px;
+    }
+
+    @keyframes waveBar {
+      from {
+        height: 4px;
+      }
+
+      to {
+        height: var(--h, 14px);
+      }
+    }
   </style>
 </head>
 
@@ -2119,6 +2289,23 @@
           </div>
           <div class="era-figure-arrow">↗</div>
         </div>
+        <div class="era-voice-box" onclick="toggleEraAudio(this)" role="button" tabindex="0"
+          aria-label="Play audio narration for Gothic era"
+          onkeydown="if(event.key==='Enter'||event.key===' ')toggleEraAudio(this)">
+          <audio src="audio/gothic.mp3" preload="none"></audio>
+          <div class="evb-icon-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+            </svg>
+          </div>
+          <div class="evb-text">
+            <div class="evb-label">Audio Narration</div>
+            <div class="evb-title">Gothic Grandeur</div>
+          </div>
+          <div class="evb-wave">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -2161,6 +2348,23 @@
           </div>
           <div class="era-figure-arrow">↗</div>
         </div>
+        <div class="era-voice-box" onclick="toggleEraAudio(this)" role="button" tabindex="0"
+          aria-label="Play audio narration for Renaissance era"
+          onkeydown="if(event.key==='Enter'||event.key===' ')toggleEraAudio(this)">
+          <audio src="audio/renaissance.mp3" preload="none"></audio>
+          <div class="evb-icon-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+            </svg>
+          </div>
+          <div class="evb-text">
+            <div class="evb-label">Audio Narration</div>
+            <div class="evb-title">Renaissance Châteaux</div>
+          </div>
+          <div class="evb-wave">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -2201,6 +2405,23 @@
             <div class="era-figure-role">The Sun King · 1638–1715</div>
           </div>
           <div class="era-figure-arrow">↗</div>
+        </div>
+        <div class="era-voice-box" onclick="toggleEraAudio(this)" role="button" tabindex="0"
+          aria-label="Play audio narration for Baroque era"
+          onkeydown="if(event.key==='Enter'||event.key===' ')toggleEraAudio(this)">
+          <audio src="audio/baroque.mp3" preload="none"></audio>
+          <div class="evb-icon-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+            </svg>
+          </div>
+          <div class="evb-text">
+            <div class="evb-label">Audio Narration</div>
+            <div class="evb-title">Baroque Absolutism</div>
+          </div>
+          <div class="evb-wave">
+            <span></span><span></span><span></span><span></span>
+          </div>
         </div>
       </div>
     </div>
@@ -2244,6 +2465,23 @@
           </div>
           <div class="era-figure-arrow">↗</div>
         </div>
+        <div class="era-voice-box" onclick="toggleEraAudio(this)" role="button" tabindex="0"
+          aria-label="Play audio narration for Haussmann era"
+          onkeydown="if(event.key==='Enter'||event.key===' ')toggleEraAudio(this)">
+          <audio src="audio/haussmann.mp3" preload="none"></audio>
+          <div class="evb-icon-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+            </svg>
+          </div>
+          <div class="evb-text">
+            <div class="evb-label">Audio Narration</div>
+            <div class="evb-title">Haussmann's Paris</div>
+          </div>
+          <div class="evb-wave">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -2283,6 +2521,23 @@
             <div class="era-figure-role">Master Architect · 1867–1942</div>
           </div>
           <div class="era-figure-arrow">↗</div>
+        </div>
+        <div class="era-voice-box" onclick="toggleEraAudio(this)" role="button" tabindex="0"
+          aria-label="Play audio narration for Art Nouveau era"
+          onkeydown="if(event.key==='Enter'||event.key===' ')toggleEraAudio(this)">
+          <audio src="audio/artnouveau.mp3" preload="none"></audio>
+          <div class="evb-icon-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+            </svg>
+          </div>
+          <div class="evb-text">
+            <div class="evb-label">Audio Narration</div>
+            <div class="evb-title">Art Nouveau Organicism</div>
+          </div>
+          <div class="evb-wave">
+            <span></span><span></span><span></span><span></span>
+          </div>
         </div>
       </div>
     </div>
@@ -2327,13 +2582,31 @@
           </div>
           <div class="era-figure-arrow">↗</div>
         </div>
+        <div class="era-voice-box" onclick="toggleEraAudio(this)" role="button" tabindex="0"
+          aria-label="Play audio narration for Modern era"
+          onkeydown="if(event.key==='Enter'||event.key===' ')toggleEraAudio(this)">
+          <audio src="audio/modern.mp3" preload="none"></audio>
+          <div class="evb-icon-wrap">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+            </svg>
+          </div>
+          <div class="evb-text">
+            <div class="evb-label">Audio Narration</div>
+            <div class="evb-title">Modern & Contemporary</div>
+          </div>
+          <div class="evb-wave">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- PULLQUOTE -->
   <div class="pullquote">
-    <blockquote>"Architecture is the will of an epoch translated into space."</blockquote>
+    <blockquote>"L'architecture est le jeu magistral, correct et magnifique des masses réunies dans la lumière."
+    </blockquote>
     <cite>Le Corbusier — Architect, Urbanist &amp; Theorist</cite>
   </div>
 
@@ -3188,6 +3461,51 @@
     function sendChip(btn) { document.getElementById("ai-input").value = btn.textContent; sendMsg(); }
     function handleKey(e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMsg(); } }
     function autoResize(el) { el.style.height = "auto"; el.style.height = Math.min(el.scrollHeight, 110) + "px"; }
+
+    /* ══════════════════════════════════
+       ERA AUDIO NARRATION
+    ══════════════════════════════════ */
+    // SVG icons
+    const ICON_SPEAKER = `<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>`;
+    const ICON_PAUSE = `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>`;
+
+    function toggleEraAudio(box) {
+      const audio = box.querySelector('audio');
+      const iconEl = box.querySelector('.evb-icon-wrap svg');
+      const isPlaying = box.classList.contains('playing');
+
+      // Stop all other playing voice boxes first
+      document.querySelectorAll('.era-voice-box.playing').forEach(other => {
+        if (other !== box) {
+          const otherAudio = other.querySelector('audio');
+          const otherIcon = other.querySelector('.evb-icon-wrap svg');
+          otherAudio.pause();
+          otherAudio.currentTime = 0;
+          other.classList.remove('playing');
+          otherIcon.innerHTML = ICON_SPEAKER;
+        }
+      });
+
+      if (isPlaying) {
+        audio.pause();
+        box.classList.remove('playing');
+        iconEl.innerHTML = ICON_SPEAKER;
+      } else {
+        audio.play().catch(() => {
+          // File not found — give subtle visual feedback
+          box.style.borderColor = 'var(--terra)';
+          setTimeout(() => box.style.borderColor = '', 1200);
+        });
+        box.classList.add('playing');
+        iconEl.innerHTML = ICON_PAUSE;
+      }
+
+      // Auto-reset when audio ends
+      audio.onended = () => {
+        box.classList.remove('playing');
+        iconEl.innerHTML = ICON_SPEAKER;
+      };
+    }
   </script>
 </body>
 

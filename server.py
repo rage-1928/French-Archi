@@ -27,19 +27,28 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
-            # Map URL path to a local HTML file; default to index.html
+            # Map URL path to a local file; default to index.html
             path = self.path.split("?")[0]  # strip query strings
-            if path in ("/quiz.html", "/quiz"):
+
+            # Serve audio files from the audio/ subfolder
+            if path.startswith("/audio/") and path.endswith(".mp3"):
+                filename = path.lstrip("/")   # e.g. "audio/gothic.mp3"
+                content_type = "audio/mpeg"
+            elif path in ("/quiz.html", "/quiz"):
                 filename = "quiz.html"
+                content_type = "text/html"
             else:
                 filename = "index.html"
+                content_type = "text/html"
 
             with open(filename, "rb") as f:
                 data = f.read()
 
             self.send_response(200)
-            self.send_header("Content-Type", "text/html")
+            self.send_header("Content-Type", content_type)
             self.send_header("Content-Length", str(len(data)))
+            self.send_header("Accept-Ranges", "bytes")
+            self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
             self.wfile.write(data)
 
